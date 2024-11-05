@@ -1,0 +1,10 @@
+{
+  "telegram_bot_name": "forta_linux_java_scanner_bot",
+  "telegram_bot_token": "7544602708:AAGlcbAut-HnUzlyW62RoE0cuNlh5V0toqE",
+  "score_api_url": "https://api.forta.network/stats/sla/scanner/",
+  "polygon_scanner_address": [
+    {      "address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b256", "name": "eth1"    },
+    {      "address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b257", "name": "eth2"    },
+    {      "address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b255", "name": "polygon1"    }
+  ]
+}
