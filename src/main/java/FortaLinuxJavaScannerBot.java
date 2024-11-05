@@ -4,6 +4,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
     long chatId;
@@ -12,13 +13,13 @@ public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         JsonReader json = new JsonReader();
-        String jsonRedArr[];
+        ArrayList<TelegramBotData> jsonRedArr;
         System.out.println("+++++++getBotUsername");
         try {
-            jsonRedArr = json.read("bot_data");
-            System.out.println("nume:::"+ jsonRedArr[0] + " " + jsonRedArr[1]);
+            jsonRedArr = json.readBot();
+            //jsonRedArr.forEach((s) ->System.out.println("key: " + s.getBotName() + " value " + s.getBotToken()));
 
-            return jsonRedArr[0];
+            return jsonRedArr.get(0).getBotName();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,16 +29,14 @@ public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         JsonReader json = new JsonReader();
-        String jsonRedArr[];
+        ArrayList<TelegramBotData> jsonRedArr;
 
         System.out.println("+++++++getBotToken");
         try {
-            jsonRedArr = json.read("bot_data");
-            botToken = jsonRedArr[1];
+            jsonRedArr = json.readBot();
+            botToken = jsonRedArr.get(0).getBotToken();
             System.out.println("+++++++token::::" + botToken);
             return botToken;
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,17 +55,18 @@ public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
     public void saySomething() throws Exception {
         HttpClientLocal hcl = new HttpClientLocal();
         JsonReader json = new JsonReader();
-        String jsonRedArr[];
+        ArrayList<ScoreApi> jsonScoreArr;
+        ArrayList<HttpClientData> jsonScannerArr;
 
         System.out.println("++++++++Am spus ceva");
         //citest datele despre
         String scoreApi, scannerAddress;
 
-        jsonRedArr = json.read("bot_data");
-        scoreApi = jsonRedArr[2];
+        jsonScoreArr = json.readScoreApi();
+        scoreApi = jsonScoreArr.get(0).getApiUrl();
 
-        jsonRedArr = json.read("http_client_data");
-        scannerAddress = jsonRedArr[1];
+        jsonScannerArr = json.readClient();
+        scannerAddress = jsonScannerArr.get(2).getClientAddress();
 
         //parul urmator: trebuie sa scot scorul din acest mesaj
         this.send(hcl.interrogate(scoreApi, scannerAddress));

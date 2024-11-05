@@ -38,6 +38,10 @@ public class Main {
         s.close();
     }
 }
+//citesc din json si din web
+//de pus in docker
+
+/////////////////////////////////
 //de revizuit (si adus in cea mai frumoasa stare) si de facut un pull request
 
 //de pus programul java sa ruleze intr un container de docker non stop
