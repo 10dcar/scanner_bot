@@ -6,7 +6,7 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 
 public class HttpClientLocal {
-    String response;
+    HttpClientResponse hcr;
 
     public String interrogate(String scoreApi, String scannerAddress) {
         HttpClient httpClient = HttpClient.newBuilder()
@@ -21,10 +21,11 @@ public class HttpClientLocal {
             HttpResponse<String> response = httpClient.send(request,
                     HttpResponse.BodyHandlers.ofString());
 
-            System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
-            System.out.println("Status code: " + response.statusCode());
-            System.out.println("Headers: " + response.headers().allValues("content-type"));
-            System.out.println("Body: " + response.body());
+            //System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
+
+            this.hcr = new HttpClientResponse(response.statusCode(),
+                    response.headers().allValues("content-type"),
+                    response.body());
 
             //driver.findElement(By.className("aaa-name")).getText();
             /*List<WebElement> elements = driver.findElements(By.className("aaa-name"));
