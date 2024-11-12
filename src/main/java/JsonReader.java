@@ -35,7 +35,6 @@ public class JsonReader {
 
         ret.forEach((s) ->
                 System.out.println("key: " + s.getBotName() + " value " + s.getBotToken()));
-        //System.out.println("---------Citit JSON bot data: " + botName + " " + botToken + " " + apiUrl);
 
         return ret;
     }
@@ -56,7 +55,6 @@ public class JsonReader {
         Iterator<Map.Entry> itr1;
         Iterator itr2 = ja.iterator();
 
-        System.out.println("---------Citit JSON adrese: ");
         while (itr2.hasNext()) {
             itr1 = ((Map) itr2.next()).entrySet().iterator();
 

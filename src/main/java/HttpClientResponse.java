@@ -1,12 +1,12 @@
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
 
 public class HttpClientResponse {
     Integer statusCode;
@@ -25,35 +25,29 @@ public class HttpClientResponse {
         System.out.println("Body: " + body);
     }
 
-    public Integer getScore(){
+    public String getScore(){
         //looking to get score and value
         try {
-            String scJs = "lowestScores";
+            String scJsParent = "lowestScores";
+            String scJsChild = "score";
+            String score;
 
             //Object obj = new JSONParser().parse(this.body);
-            Object obj = new JSONParser().parse(new FileReader(jsonPathName));
-            this.jo = (JSONObject) obj;
+            String content = new String(Files.readAllBytes(Paths.get(jsonPathName)));
+            JSONObject jsonObject = new JSONObject(content);
 
-            (String)this.jo.get(scJs);
+            JSONArray nestedJsonArray = jsonObject.getJSONArray(scJsParent);
+            JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);
+            String nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
 
-            Iterator<Map.Entry> itr1;
-            Iterator itr2 = ja.iterator();
+            System.out.println(nestedValue);
 
-            System.out.println("---------Citit JSON adrese: ");
-            while (itr2.hasNext()) {
-                itr1 = ((Map) itr2.next()).entrySet().iterator();
-
-                while (itr1.hasNext()) {
-                    if(pair.getKey() == "score"){
-                        return pair.getValue();
-                    }
-                }
-            }
-
-        } catch (ParseException e) {
+            return nestedValue;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return -1;
     }
     public Integer getResponseStatus(){
         return this.statusCode;

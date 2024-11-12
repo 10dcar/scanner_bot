@@ -3,10 +3,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
+public class TelegramBot extends TelegramLongPollingBot {
     long chatId;
     String botToken;
 
@@ -14,10 +13,8 @@ public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
     public String getBotUsername() {
         JsonReader json = new JsonReader();
         ArrayList<TelegramBotData> jsonRedArr;
-        System.out.println("+++++++getBotUsername");
         try {
             jsonRedArr = json.readBot();
-            //jsonRedArr.forEach((s) ->System.out.println("key: " + s.getBotName() + " value " + s.getBotToken()));
 
             return jsonRedArr.get(0).getBotName();
         } catch (Exception e) {
@@ -31,11 +28,9 @@ public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
         JsonReader json = new JsonReader();
         ArrayList<TelegramBotData> jsonRedArr;
 
-        System.out.println("+++++++getBotToken");
         try {
             jsonRedArr = json.readBot();
             botToken = jsonRedArr.get(0).getBotToken();
-            System.out.println("+++++++token::::" + botToken);
             return botToken;
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,14 +47,12 @@ public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
         this.send(messageText + " Ii confirm cu acest mesaj ca am primit. ");
     }
 
-    public void saySomething() throws Exception {
+    public void getScore() throws Exception {
         HttpClientLocal hcl = new HttpClientLocal();
         JsonReader json = new JsonReader();
         ArrayList<ScoreApi> jsonScoreArr;
         ArrayList<HttpClientData> jsonScannerArr;
 
-        System.out.println("++++++++Am spus ceva");
-        //citest datele despre
         String scoreApi, scannerAddress;
 
         jsonScoreArr = json.readScoreApi();
@@ -67,14 +60,14 @@ public class FortaLinuxJavaScannerBot extends TelegramLongPollingBot {
 
         jsonScannerArr = json.readClient();
         scannerAddress = jsonScannerArr.get(2).getClientAddress();
+        HttpClientResponse hcr = hcl.interrogate(scoreApi, scannerAddress);
 
-        //parul urmator: trebuie sa scot scorul din acest mesaj
-        this.send(hcl.interrogate(scoreApi, scannerAddress));
+        this.send(hcr.getScore());
     }
 
     public void send(String messageText){
         SendMessage message = SendMessage.builder()
-                .chatId(this.chatId+"") //Who are we sending a message to
+                .chatId(this.chatId+"")
                 .text("You said: " + messageText).build();
         try {
             execute(message);
