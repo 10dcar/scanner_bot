@@ -24,10 +24,5 @@ public class Main {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         TelegramBot bot = new TelegramBot();
         botsApi.registerBot(bot);
-
-        Scanner s = new Scanner(System.in);
-        s.nextLine();
-        bot.getScore();
-        s.close();
     }
 }

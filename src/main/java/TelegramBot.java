@@ -40,14 +40,20 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        String score = "Null";
         this.chatId = update.getMessage().getChatId();
-        String messageText = "Am primit mesaj de la BOT (receptionat ID ul)";
-        System.out.println(update.getMessage().getText());
 
-        this.send(messageText + " Ii confirm cu acest mesaj ca am primit. ");
+        System.out.println(update.getMessage().getText());
+        try {
+            score = this.getScore();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        this.send("Scorul actual este: " + score + " ");
     }
 
-    public void getScore() throws Exception {
+    public String getScore() throws Exception {
         HttpClientLocal hcl = new HttpClientLocal();
         JsonReader json = new JsonReader();
         ArrayList<ScoreApi> jsonScoreArr;
@@ -62,7 +68,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         scannerAddress = jsonScannerArr.get(2).getClientAddress();
         HttpClientResponse hcr = hcl.interrogate(scoreApi, scannerAddress);
 
-        this.send(hcr.getScore());
+        return hcr.getScore();
     }
 
     public void send(String messageText){
