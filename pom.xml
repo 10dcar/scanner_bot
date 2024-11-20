@@ -24,6 +24,7 @@
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
+        <java.version>11</java.version>
     </properties>
 
 </project>

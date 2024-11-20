@@ -8,7 +8,7 @@ trimit raspuns inapoi cu rezultatul interogarii folosind NUMARUL de mai sus
 
 TO DO
 //fac sa pornesc programul java si sa astepte (onUpdateReceived()) pana trimit mesaj din telegram
-//dupa ce am primit mesajul din telegram continui programul java si trimit raspunsul
+//dupa ce am primit mesajul din telegram continui programul java si trimit raspunsul v
 
 //statistici server utilisation:
 //1 rulezi docker run cu anumiti parametri care porneste o instanta de node-exporter
