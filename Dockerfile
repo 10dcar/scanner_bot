@@ -5,7 +5,7 @@ FROM maven:3.8.4-jdk-11 AS build
 WORKDIR /app
 
 # Copy the project files to the working directory
-COPY . .
+COPY . /app
 
 # Build the Maven project
 RUN mvn clean install
@@ -20,4 +20,4 @@ WORKDIR /app
 COPY --from=build /app/target/forta_linux_java_scanner_bot-1.0-SNAPSHOT.jar /app/scanner_bot.jar
 
 # Run the Java application
-ENTRYPOINT ["java", "-jar", "scanner_bot.jar"]
+ENTRYPOINT ["java", "-jar", "/app/scanner_bot.jar"]
