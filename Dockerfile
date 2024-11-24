@@ -1,5 +1,5 @@
 # Use an official Maven image to build the project
-FROM maven:3.8.5-jdk-11 AS build
+FROM maven:3.8.4-jdk-11 AS build
 
 # Set the working directory
 WORKDIR /bots/scanner_bot
