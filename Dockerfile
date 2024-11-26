@@ -1,5 +1,5 @@
 # Use an official Maven image to build the app
-FROM maven:3.8.7-openjdk-11 AS build
+FROM maven:3.8.7-openjdk-21 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY HelloWorldDocker/ .
 RUN mvn clean package
 
 # Use an official OpenJDK runtime as a parent image
-FROM openjdk:11
+FROM openjdk:21
 
 # Set the working directory
 WORKDIR /app
