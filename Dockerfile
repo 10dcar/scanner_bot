@@ -1,22 +1,22 @@
-# Use an official Maven image to build the project
-FROM maven:3.8.4-jdk-11 AS build
+# Use an official Maven image to build the app
+FROM maven:3.8.7-openjdk-11 AS build
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the project files to the working directory
-COPY . /app
+# Copy the current directory contents into the container at /app
+COPY HelloWorldDocker/ .
 
-# Build the Maven project
-RUN mvn clean install
+# Package the application
+RUN mvn clean package
 
-# Use an official OpenJDK image to run the application
-FROM openjdk:11-jre-slim
+# Use an official OpenJDK runtime as a parent image
+FROM openjdk:11
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the jar file from the build stage
+# Copy the packaged jar file from the build stage
 COPY --from=build /app/target/forta_linux_java_scanner_bot-1.0-SNAPSHOT.jar /app/scanner_bot.jar
 
 # Run the Java application
