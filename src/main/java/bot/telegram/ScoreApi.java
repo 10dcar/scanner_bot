@@ -1,4 +1,4 @@
-package bot.telegram;
+package org.example;
 
 public class ScoreApi {
     String score_api_url;

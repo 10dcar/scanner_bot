@@ -1,4 +1,4 @@
-package bot.telegram;
+package org.example;
 
 public class TelegramBotData {
     String telegram_bot_name;
