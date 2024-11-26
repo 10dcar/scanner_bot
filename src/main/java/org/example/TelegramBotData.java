@@ -1,3 +1,5 @@
+package bot.telegram;
+
 public class TelegramBotData {
     String telegram_bot_name;
     String telegram_bot_token;

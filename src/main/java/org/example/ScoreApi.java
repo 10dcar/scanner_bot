@@ -1,3 +1,5 @@
+package bot.telegram;
+
 public class ScoreApi {
     String score_api_url;
 

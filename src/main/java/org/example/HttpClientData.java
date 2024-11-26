@@ -1,3 +1,5 @@
+package bot.telegram;
+
 public class HttpClientData {
     String address;
     String name;

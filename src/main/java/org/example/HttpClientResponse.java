@@ -1,6 +1,7 @@
+package bot.telegram;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
