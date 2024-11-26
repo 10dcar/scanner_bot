@@ -1,4 +1,4 @@
-package org.example;
+package bot.telegram;
 
 import java.io.IOException;
 import java.net.URI;

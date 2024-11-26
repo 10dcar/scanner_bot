@@ -1,4 +1,4 @@
-package org.example;
+package bot.telegram;
 
 import java.io.FileReader;
 import java.io.IOException;
