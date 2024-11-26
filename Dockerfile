@@ -1,17 +1,17 @@
 # Use an official Maven image to build the app
-FROM maven:3.8.7-openjdk-21 AS build
+FROM maven:3.8.6-openjdk-11 AS build
 
 # Set the working directory
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY HelloWorldDocker/ .
+COPY scanner_bot/ .
 
 # Package the application
 RUN mvn clean package
 
 # Use an official OpenJDK runtime as a parent image
-FROM openjdk:21
+FROM openjdk:11
 
 # Set the working directory
 WORKDIR /app
