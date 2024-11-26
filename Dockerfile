@@ -1,6 +1,6 @@
 # Use an official Maven image to build the app
-# FROM maven:3.8.6-openjdk-11 AS build
-FROM maven:3.8.6-openjdk-21 AS build
+FROM maven:3.8.6-openjdk-11 AS build
+#FROM maven:3.8.6-openjdk-21 AS build
 
 # Set the working directory
 WORKDIR /app
@@ -18,7 +18,8 @@ RUN mvn clean install
 RUN ls -l /app/target
 
 # Use an official OpenJDK runtime as a parent image
-FROM openjdk:21-jre-slim
+FROM openjdk:11
+#FROM openjdk:21-jre-slim
 
 # Set the working directory
 WORKDIR /app
