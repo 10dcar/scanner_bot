@@ -22,7 +22,7 @@ FROM openjdk:11
 #FROM openjdk:21-jre-slim
 
 # Copy the packaged jar file from the build stage
-COPY --from=build /app/target/forta_linux_java_scanner_bot-1.0-SNAPSHOT.jar /app/scanner_bot.jar
+COPY --from=build /app/target/forta_linux_java_scanner_bot-1.0-SNAPSHOT.jar /app/forta_linux_java_scanner_bot.jar
 
 # Run the Java application
-ENTRYPOINT ["java", "-jar", "/app/scanner_bot.jar"]
+ENTRYPOINT ["java", "-jar", "/app/forta_linux_java_scanner_bot.jar"]
