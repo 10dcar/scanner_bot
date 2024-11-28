@@ -2,6 +2,8 @@ package bot.telegram;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,12 +13,16 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class JsonReader {
-    static String jsonPathName = "./src/main/resources/config.json";
+    static String jsonPathName = "/src/main/resources/config.json";
     JSONObject jo;
 
     public JsonReader() {
         try {
-            Object obj = new JSONParser().parse(new FileReader(jsonPathName));
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            System.out.println("Current absolute path is: " + s);
+
+            Object obj = new JSONParser().parse(new FileReader(s+jsonPathName));
             this.jo = (JSONObject) obj;
         } catch(IOException ioe){
 

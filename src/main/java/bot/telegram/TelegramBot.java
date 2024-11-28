@@ -6,6 +6,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class TelegramBot extends TelegramLongPollingBot {
@@ -32,8 +34,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         ArrayList<TelegramBotData> jsonRedArr;
 
         try {
-            File directory = new File("./");
-            System.out.println("path:::"+directory.getAbsolutePath());
             jsonRedArr = json.readBot();
             botToken = jsonRedArr.get(0).getBotToken();
             return botToken;
