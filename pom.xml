@@ -24,6 +24,8 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
