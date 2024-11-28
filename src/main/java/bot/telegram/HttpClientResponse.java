@@ -13,7 +13,8 @@ public class HttpClientResponse {
     Integer statusCode;
     List<String> headers;
     String body;
-    static String jsonPathName = "./src/main/resources/scannertest.json";
+    //static String jsonPathName = "./src/main/resources/scannertest.json";
+    static String jsonPathName = "/app/resources/scannertest.json";
     JSONObject jo;
 
     public HttpClientResponse(Integer statusCode, List<String> headers, String body) {
