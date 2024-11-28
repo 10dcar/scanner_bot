@@ -25,7 +25,7 @@ FROM openjdk:11
 COPY --from=build /app/target/forta_linux_java_scanner_bot-1.0-SNAPSHOT.jar /app/scanner_bot.jar
 COPY --from=build /app/target/classes /app/classes
 COPY --from=build /app/target/dependency /app/dependency
-COPY --from=build /app/main/resources /app/resources
+COPY --from=build /app/src/main/resources /app/resources
 
 # Run the Java application
 #ENTRYPOINT ["java", "-jar", "-cp src bot.telegram.Main", "/app/scanner_bot.jar"]
