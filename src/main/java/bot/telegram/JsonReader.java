@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class JsonReader {
-    static String jsonPathName = "./src/main/resources/config.json";
+    static String jsonPathName = "/app/resources/config.json";
     JSONObject jo;
 
     public JsonReader() {
@@ -22,7 +22,7 @@ public class JsonReader {
             String s = currentRelativePath.toAbsolutePath().toString();
             System.out.println("Current absolute path is: " + s);
 
-            Object obj = new JSONParser().parse(new FileReader(jsonPathName));
+            Object obj = new JSONParser().parse(new FileReader(s+jsonPathName));
             this.jo = (JSONObject) obj;
         } catch(IOException ioe){
 
