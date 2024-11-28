@@ -21,9 +21,6 @@ RUN ls -l /app/target
 FROM openjdk:11
 #FROM openjdk:21-jre-slim
 
-# Set the working directory
-WORKDIR /app
-
 # Copy the packaged jar file from the build stage
 COPY --from=build /app/target/forta_linux_java_scanner_bot-1.0-SNAPSHOT.jar /app/scanner_bot.jar
 

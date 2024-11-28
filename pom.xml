@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>bot.telegram</groupId>
-    <artifactId>scanner_bot</artifactId>
+    <artifactId>forta_linux_java_scanner_bot</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>scanner_bot</name>
+    <name>forta_linux_java_scanner_bot</name>
     <url>http://maven.apache.org</url>
     <build>
         <plugins>
