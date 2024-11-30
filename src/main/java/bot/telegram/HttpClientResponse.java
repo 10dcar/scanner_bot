@@ -27,7 +27,7 @@ public class HttpClientResponse {
         System.out.println("Body: " + body);
     }
 
-    public String getScore(){
+    public String getScoreLocal(){
         //looking to get score and value
         try {
             String scJsParent = "lowestScores";
@@ -51,7 +51,27 @@ public class HttpClientResponse {
             throw new RuntimeException(e);
         }
     }
+    public String getScore(){
+        String scJsParent = "lowestScores";
+        String scJsChild = "score";
+        String score;
+
+        //Object obj = new JSONParser().parse(this.body);
+        String content = this.getResponseBody();
+        JSONObject jsonObject = new JSONObject(content);
+
+        JSONArray nestedJsonArray = jsonObject.getJSONArray(scJsParent);
+        JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);
+        String nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
+
+        System.out.println(nestedValue);
+
+        return nestedValue;
+    }
     public Integer getResponseStatus(){
         return this.statusCode;
+    }
+    public String getResponseBody(){
+        return this.body;
     }
 }
