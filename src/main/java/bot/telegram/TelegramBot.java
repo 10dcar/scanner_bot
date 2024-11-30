@@ -70,7 +70,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         scoreApi = jsonScoreArr.get(0).getApiUrl();
 
         jsonScannerArr = json.readClient();
-        scannerAddress = jsonScannerArr.get(2).getClientAddress();
+        scannerAddress = jsonScannerArr.get(3).getClientAddress();
         HttpClientResponse hcr = hcl.interrogate(scoreApi, scannerAddress);
 
         return hcr.getScore();
