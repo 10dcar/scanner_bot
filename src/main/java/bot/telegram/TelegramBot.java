@@ -9,6 +9,8 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TelegramBot extends TelegramLongPollingBot {
     long chatId;

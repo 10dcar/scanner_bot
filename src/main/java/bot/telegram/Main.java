@@ -23,5 +23,8 @@ public class Main {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         TelegramBot bot = new TelegramBot();
         botsApi.registerBot(bot);
+
+        PeriodicUpdate pa = new PeriodicUpdate(bot);
+
     }
 }
