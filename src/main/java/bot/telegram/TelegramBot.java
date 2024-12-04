@@ -79,13 +79,15 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public void send(String messageText){
-        SendMessage message = SendMessage.builder()
-                .chatId(this.chatId+"")
-                .text("You said: " + messageText).build();
-        try {
-            execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+        if(this.chatId > 0) {
+            SendMessage message = SendMessage.builder()
+                    .chatId(this.chatId + "")
+                    .text("You said: " + messageText).build();
+            try {
+                execute(message);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

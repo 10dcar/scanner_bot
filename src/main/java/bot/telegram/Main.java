@@ -25,6 +25,6 @@ public class Main {
         botsApi.registerBot(bot);
 
         PeriodicUpdate pa = new PeriodicUpdate(bot);
-
+        pa.periodicUpdate();
     }
 }
