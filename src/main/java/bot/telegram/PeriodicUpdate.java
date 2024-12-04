@@ -13,6 +13,6 @@ public class PeriodicUpdate {
         Timer timer = new Timer();
         TimerTask task = new TimerUpdate(this.bot);
 
-        timer.schedule(task, 2000, 5000);
+        timer.schedule(task, 10000, 50000);
     }
 }
