@@ -5,7 +5,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Boolean local = true;
+        Boolean local = false;
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         TelegramBot bot = new TelegramBot(local);
 

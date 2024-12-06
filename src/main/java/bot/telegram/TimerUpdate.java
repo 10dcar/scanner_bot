@@ -15,7 +15,7 @@ public class TimerUpdate extends TimerTask {
     public void run() {
         try {
             String score = this.bot.getScore(this.local);
-            if((Integer.parseInt(score) > 0) && (Integer.parseInt(score) < 5)) {
+            if((Float.parseFloat(score) > 0) && (Float.parseFloat(score) < 5)) {
                 this.bot.send(score);
             }
         } catch (Exception e) {
