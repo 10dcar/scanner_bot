@@ -15,15 +15,19 @@ import java.util.TimerTask;
 public class TelegramBot extends TelegramLongPollingBot {
     long chatId;
     String botToken;
+    Boolean local;
 
+    public TelegramBot(Boolean local){
+        this.local = local;
+    }
     @Override
     public String getBotUsername() {
-        JsonReader json = new JsonReader();
-        ArrayList<TelegramBotData> jsonRedArr;
+        JsonReader json = new JsonReader(this.local);
+        TelegramBotData jsonRed;
         try {
-            jsonRedArr = json.readBot();
+            jsonRed = json.readBot();
 
-            return jsonRedArr.get(0).getBotName();
+            return jsonRed.getBotName();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,12 +36,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        JsonReader json = new JsonReader();
-        ArrayList<TelegramBotData> jsonRedArr;
+        JsonReader json = new JsonReader(this.local);
+        TelegramBotData jsonRed;
 
         try {
-            jsonRedArr = json.readBot();
-            botToken = jsonRedArr.get(0).getBotToken();
+            jsonRed = json.readBot();
+            botToken = jsonRed.getBotToken();
             return botToken;
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,7 +56,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         System.out.println(update.getMessage().getText());
         try {
-            score = this.getScore();
+            score = this.getScore(this.local);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -60,22 +64,17 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.send("Scorul actual este: " + score + " ");
     }
 
-    public String getScore() throws Exception {
+    public String getScore(Boolean local) throws Exception {
         HttpClientLocal hcl = new HttpClientLocal();
-        JsonReader json = new JsonReader();
-        ArrayList<ScoreApi> jsonScoreArr;
+        JsonReader json = new JsonReader(local);
         ArrayList<HttpClientData> jsonScannerArr;
-
-        String scoreApi, scannerAddress;
-
-        jsonScoreArr = json.readScoreApi();
-        scoreApi = jsonScoreArr.get(0).getApiUrl();
+        String scannerAddress;
 
         jsonScannerArr = json.readClient();
         scannerAddress = jsonScannerArr.get(3).getClientAddress();
-        HttpClientResponse hcr = hcl.interrogate(scoreApi, scannerAddress);
+        HttpClientResponse hcr = hcl.interrogate(json.readScoreApi(), scannerAddress);
 
-        return hcr.getScore();
+        return hcr.getScore(local);
     }
 
     public void send(String messageText){

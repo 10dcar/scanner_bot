@@ -1,30 +1,16 @@
 package bot.telegram;
 
-/*import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-public class Main {
-    public static void main(String[] args) {
-        ApiContextInitializer.init();
-        TelegramBotsApi botsApi = new TelegramBotsApi();
-        try {
-            botsApi.registerBot(new FortaLinuxJavaScannerBot());
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-}*/
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        Boolean local = true;
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        TelegramBot bot = new TelegramBot();
-        botsApi.registerBot(bot);
+        TelegramBot bot = new TelegramBot(local);
 
-        PeriodicUpdate pa = new PeriodicUpdate(bot);
+        botsApi.registerBot(bot);
+        PeriodicUpdate pa = new PeriodicUpdate(bot, local);
         pa.periodicUpdate();
     }
 }

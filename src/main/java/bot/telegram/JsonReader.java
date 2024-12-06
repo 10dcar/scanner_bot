@@ -2,8 +2,6 @@ package bot.telegram;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -13,16 +11,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class JsonReader {
-    //static String jsonPathName = "./src/main/resources/config.json";
-    static String jsonPathName = "/app/resources/config.json";
     JSONObject jo;
 
-    public JsonReader() {
-        try {
-            /*Path currentRelativePath = Paths.get("/");
-            String s = currentRelativePath.toAbsolutePath().toString();
-            System.out.println("Current absolute path is: " + s);*/
+    public JsonReader(Boolean local) {
+        String jsonPathName;
+        if(local) {
+            jsonPathName = "./src/main/resources/config.json";
+        } else {
+            jsonPathName = "/app/resources/config.json";
+        }
 
+        try {
             Object obj = new JSONParser().parse(new FileReader(jsonPathName));
             this.jo = (JSONObject) obj;
         } catch(IOException ioe){
@@ -32,7 +31,7 @@ public class JsonReader {
         }
     }
 
-    public ArrayList<TelegramBotData> readBot() {
+    public TelegramBotData readBot() {
         String tbn = "telegram_bot_name";
         String tbt = "telegram_bot_token";
         ArrayList<TelegramBotData> ret = new ArrayList<>();
@@ -42,16 +41,16 @@ public class JsonReader {
         ret.forEach((s) ->
                 System.out.println("key: " + s.getBotName() + " value " + s.getBotToken()));
 
-        return ret;
+        return ret.get(0);
     }
 
-    public ArrayList<ScoreApi> readScoreApi() {
+    public String readScoreApi() {
         String sau = "score_api_url";
-        ArrayList<ScoreApi> ret = new ArrayList<>();
+        ArrayList<String> ret = new ArrayList<>();
 
-        ret.add(new ScoreApi((String)this.jo.get(sau)));
+        ret.add((String) this.jo.get(sau));
 
-        return ret;
+        return ret.get(0);
     }
 
     public ArrayList<HttpClientData> readClient() {
@@ -64,12 +63,11 @@ public class JsonReader {
         while (itr2.hasNext()) {
             itr1 = ((Map) itr2.next()).entrySet().iterator();
 
-            while (itr1.hasNext()) {
+            if (itr1.hasNext()) {
                 Map.Entry pair = itr1.next();
                 System.out.println(pair.getKey() + " : " + pair.getValue());
 
                 ret.add(new HttpClientData((String)pair.getKey(), (String)pair.getValue()));
-                break;
             }
         }
         return ret;

@@ -13,8 +13,6 @@ public class HttpClientResponse {
     Integer statusCode;
     List<String> headers;
     String body;
-    //static String jsonPathName = "./src/main/resources/scannertest.json";
-    static String jsonPathName = "/app/resources/scannertest.json";
     JSONObject jo;
 
     public HttpClientResponse(Integer statusCode, List<String> headers, String body) {
@@ -27,38 +25,32 @@ public class HttpClientResponse {
         System.out.println("Body: " + body);
     }
 
-    public String getScoreLocal(){
-        //looking to get score and value
-        try {
-            String scJsParent = "lowestScores";
-            String scJsChild = "score";
-            String score;
+    public String getScoreValue(Boolean local){
+        String jsonPathName;
+        String content;
 
-            //Object obj = new JSONParser().parse(this.body);
-            String content = new String(Files.readAllBytes(Paths.get(jsonPathName)));
-            JSONObject jsonObject = new JSONObject(content);
-
-            JSONArray nestedJsonArray = jsonObject.getJSONArray(scJsParent);
-            JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);
-            String nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
-
-            System.out.println(nestedValue);
-
-            return nestedValue;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(local) {
+            jsonPathName = "./src/main/resources/scannertest.json";
+            try {
+                content = new String(Files.readAllBytes(Paths.get(jsonPathName)));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+        else {
+            jsonPathName = "/app/resources/scannertest.json";
+            content = this.getResponseBody();
+        }
+        return content;
     }
-    public String getScore(){
+    public String getScore(Boolean local){
+        //looking to get score and value
         String scJsParent = "lowestScores";
         String scJsChild = "score";
-        String score;
 
-        //Object obj = new JSONParser().parse(this.body);
-        String content = this.getResponseBody();
-        JSONObject jsonObject = new JSONObject(content);
+        JSONObject jsonObject = new JSONObject(this.getScoreValue(local));
 
         JSONArray nestedJsonArray = jsonObject.getJSONArray(scJsParent);
         JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);
@@ -68,6 +60,7 @@ public class HttpClientResponse {
 
         return nestedValue;
     }
+
     public Integer getResponseStatus(){
         return this.statusCode;
     }
