@@ -13,13 +13,12 @@ import org.json.simple.parser.*;
 public class JsonReader {
     JSONObject jo;
 
-    public JsonReader(Boolean local) {
+    public JsonReader() {
         String jsonPathName;
-        if(local) {
-            jsonPathName = "./src/main/resources/config.json";
-        } else {
-            jsonPathName = "/app/resources/config.json";
-        }
+
+        //jsonPathName = "/app/resources/config.json";
+        //jsonPathName = "./src/main/resources/config.json";
+        jsonPathName = "./target/classes/config.json";
 
         try {
             Object obj = new JSONParser().parse(new FileReader(jsonPathName));

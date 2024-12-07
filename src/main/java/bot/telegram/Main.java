@@ -5,12 +5,13 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Boolean local = false;
+        // Take the content from local file for test or online localContent = true/false
+        Boolean localContentTest = false;
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        TelegramBot bot = new TelegramBot(local);
+        TelegramBot bot = new TelegramBot(localContentTest);
 
         botsApi.registerBot(bot);
-        PeriodicUpdate pa = new PeriodicUpdate(bot, local);
+        PeriodicUpdate pa = new PeriodicUpdate(bot);
         pa.periodicUpdate();
     }
 }

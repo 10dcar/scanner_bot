@@ -25,12 +25,15 @@ public class HttpClientResponse {
         System.out.println("Body: " + body);
     }
 
-    public String getScoreValue(Boolean local){
+    public String getScoreValue(Boolean localContentTest){
         String jsonPathName;
         String content;
 
-        if(local) {
-            jsonPathName = "./src/main/resources/scannertest.json";
+        //jsonPathName = "/app/resources/scannertest.json";
+        //jsonPathName = "./src/main/resources/scannertest.json";
+        jsonPathName = "./target/classes/scannertest.json";
+
+        if(localContentTest) {
             try {
                 content = new String(Files.readAllBytes(Paths.get(jsonPathName)));
             } catch (FileNotFoundException e) {
@@ -40,17 +43,16 @@ public class HttpClientResponse {
             }
         }
         else {
-            jsonPathName = "/app/resources/scannertest.json";
             content = this.getResponseBody();
         }
         return content;
     }
-    public String getScore(Boolean local){
+    public String getScore(Boolean localContentTest){
         //looking to get score and value
         String scJsParent = "lowestScores";
         String scJsChild = "score";
 
-        JSONObject jsonObject = new JSONObject(this.getScoreValue(local));
+        JSONObject jsonObject = new JSONObject(this.getScoreValue(localContentTest));
 
         JSONArray nestedJsonArray = jsonObject.getJSONArray(scJsParent);
         JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);

@@ -15,14 +15,14 @@ import java.util.TimerTask;
 public class TelegramBot extends TelegramLongPollingBot {
     long chatId;
     String botToken;
-    Boolean local;
+    Boolean localContentTest;
 
-    public TelegramBot(Boolean local){
-        this.local = local;
+    public TelegramBot(Boolean localContentTest){
+        this.localContentTest = localContentTest;
     }
     @Override
     public String getBotUsername() {
-        JsonReader json = new JsonReader(this.local);
+        JsonReader json = new JsonReader();
         TelegramBotData jsonRed;
         try {
             jsonRed = json.readBot();
@@ -36,7 +36,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        JsonReader json = new JsonReader(this.local);
+        JsonReader json = new JsonReader();
         TelegramBotData jsonRed;
 
         try {
@@ -56,7 +56,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         System.out.println(update.getMessage().getText());
         try {
-            score = this.getScore(this.local);
+            score = this.getScore();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -64,9 +64,9 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.send("Scorul actual este: " + score + " ");
     }
 
-    public String getScore(Boolean local) throws Exception {
+    public String getScore() throws Exception {
         HttpClientLocal hcl = new HttpClientLocal();
-        JsonReader json = new JsonReader(local);
+        JsonReader json = new JsonReader();
         ArrayList<HttpClientData> jsonScannerArr;
         String scannerAddress;
 
@@ -74,7 +74,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         scannerAddress = jsonScannerArr.get(3).getClientAddress();
         HttpClientResponse hcr = hcl.interrogate(json.readScoreApi(), scannerAddress);
 
-        return hcr.getScore(local);
+        return hcr.getScore(this.localContentTest);
     }
 
     public void send(String messageText){
