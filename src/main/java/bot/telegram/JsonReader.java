@@ -18,7 +18,8 @@ public class JsonReader {
 
         //jsonPathName = "/app/resources/config.json";
         //jsonPathName = "./src/main/resources/config.json";
-        jsonPathName = "./target/classes/config.json";
+        //jsonPathName = "./target/classes/config.json";
+        jsonPathName = "/app/dependency/config.json";
 
         try {
             Object obj = new JSONParser().parse(new FileReader(jsonPathName));

@@ -31,7 +31,8 @@ public class HttpClientResponse {
 
         //jsonPathName = "/app/resources/scannertest.json";
         //jsonPathName = "./src/main/resources/scannertest.json";
-        jsonPathName = "./target/classes/scannertest.json";
+        //jsonPathName = "./target/classes/scannertest.json";
+        jsonPathName = "/app/dependency/scannertest.json";
 
         if(localContentTest) {
             try {
