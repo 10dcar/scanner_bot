@@ -13,6 +13,8 @@ public class TimerUpdate extends TimerTask {
     public void run() {
         try {
             String score = this.bot.getScore();
+
+            System.out.println("Timed update score: "+score);
             if((Float.parseFloat(score) > 0) && (Float.parseFloat(score) < 0.5)) {
                 this.bot.send(score);
             }
