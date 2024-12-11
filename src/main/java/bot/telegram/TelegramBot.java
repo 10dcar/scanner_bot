@@ -41,8 +41,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         try {
             jsonRed = json.readBot();
-            botToken = jsonRed.getBotToken();
-            return botToken;
+            if(jsonRed != null) {
+                botToken = jsonRed.getBotToken();
+                return botToken;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
