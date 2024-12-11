@@ -10,8 +10,10 @@ public class Main {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         TelegramBot bot = new TelegramBot(localContentTest);
 
-        botsApi.registerBot(bot);
-        PeriodicUpdate pa = new PeriodicUpdate(bot);
-        pa.periodicUpdate();
+        if(bot != null) {
+            botsApi.registerBot(bot);
+            PeriodicUpdate pa = new PeriodicUpdate(bot);
+            pa.periodicUpdate();
+        }
     }
 }
