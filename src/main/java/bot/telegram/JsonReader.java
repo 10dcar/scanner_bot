@@ -32,13 +32,20 @@ public class JsonReader {
         String tbn = "telegram_bot_name";
         String tbt = "telegram_bot_token";
         ArrayList<TelegramBotData> ret = new ArrayList<>();
+        TelegramBotData tbd = null;
 
-        ret.add(new TelegramBotData((String)this.jo.get(tbn), (String)this.jo.get(tbt)));
+        if(this.jo != null) {
+            ret.add(new TelegramBotData((String) this.jo.get(tbn), (String) this.jo.get(tbt)));
 
-        ret.forEach((s) ->
-                System.out.println("key: " + s.getBotName() + " value " + s.getBotToken()));
+            ret.forEach((s) ->
+                    System.out.println("key: " + s.getBotName() + " value " + s.getBotToken()));
+        }
 
-        return ret.get(0);
+        try {
+            tbd = ret.get(0);
+        } catch (IndexOutOfBoundsException e) { };
+
+        return tbd;
     }
 
     public String readScoreApi() {
