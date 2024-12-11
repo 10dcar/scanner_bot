@@ -16,10 +16,7 @@ public class JsonReader {
     public JsonReader() {
         String jsonPathName;
 
-        //jsonPathName = "/app/resources/config.json";
-        //jsonPathName = "./src/main/resources/config.json";
-        //jsonPathName = "./target/classes/config.json";
-        jsonPathName = "/app/dependency/config.json";
+        jsonPathName = "./target/dependency/config.json";
 
         try {
             Object obj = new JSONParser().parse(new FileReader(jsonPathName));
@@ -53,21 +50,23 @@ public class JsonReader {
         return ret.get(0);
     }
 
-    public ArrayList<HttpClientData> readClient() {
+    public ArrayList<HttpClientData> readClient(String client) {
         ArrayList<HttpClientData> ret = new ArrayList<>();
 
-        JSONArray ja = (JSONArray) this.jo.get("polygon_scanner_address");
-        Iterator<Map.Entry> itr1;
-        Iterator itr2 = ja.iterator();
+        JSONArray ja = (JSONArray) this.jo.get(client);
+        if(ja != null) {
+            Iterator<Map.Entry> itr1;
+            Iterator itr2 = ja.iterator();
 
-        while (itr2.hasNext()) {
-            itr1 = ((Map) itr2.next()).entrySet().iterator();
+            while (itr2.hasNext()) {
+                itr1 = ((Map) itr2.next()).entrySet().iterator();
 
-            if (itr1.hasNext()) {
-                Map.Entry pair = itr1.next();
-                System.out.println(pair.getKey() + " : " + pair.getValue());
+                if (itr1.hasNext()) {
+                    Map.Entry pair = itr1.next();
+                    System.out.println(pair.getKey() + " : " + pair.getValue());
 
-                ret.add(new HttpClientData((String)pair.getKey(), (String)pair.getValue()));
+                    ret.add(new HttpClientData((String) pair.getKey(), (String) pair.getValue()));
+                }
             }
         }
         return ret;

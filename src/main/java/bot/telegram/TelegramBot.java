@@ -56,25 +56,37 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         System.out.println(update.getMessage().getText());
         try {
-            score = this.getScore();
+            score = this.getScore("forta_scanner_address");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        this.send("Scorul actual este: " + score + " ");
+        this.send("Scorul actual Forta este: " + score + " ");
+        try {
+            score = this.getScore("storj_scanner_address_srv1");
+            //score = this.getScore("storj_scanner_address_srv2");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        //foreach
+        this.send("Scorul actual Storj este: " + score + " ");
     }
 
-    public String getScore() throws Exception {
+    public String getScore(String client) throws Exception {
         HttpClientLocal hcl = new HttpClientLocal();
         JsonReader json = new JsonReader();
         ArrayList<HttpClientData> jsonScannerArr;
         String scannerAddress;
 
-        jsonScannerArr = json.readClient();
-        scannerAddress = jsonScannerArr.get(3).getClientAddress();
-        HttpClientResponse hcr = hcl.interrogate(json.readScoreApi(), scannerAddress);
+        jsonScannerArr = json.readClient(client);
+        try {
+            scannerAddress = jsonScannerArr.get(3).getClientAddress();
+            HttpClientResponse hcr = hcl.interrogate(json.readScoreApi(), scannerAddress);
 
-        return hcr.getScore(this.localContentTest);
+            return hcr.getScore(this.localContentTest);
+        } catch (IndexOutOfBoundsException e) { }
+
+        return "";
     }
 
     public void send(String messageText){

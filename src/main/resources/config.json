@@ -2,10 +2,26 @@
   "telegram_bot_name": "forta_linux_java_scanner_bot",
   "telegram_bot_token": "7544602708:AAGlcbAut-HnUzlyW62RoE0cuNlh5V0toqE",
   "score_api_url": "https://api.forta.network/stats/sla/scanner/",
-  "polygon_scanner_address": [
+  "forta_scanner_address": [
     {      "address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b256", "name": "eth1"    },
     {      "address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b257", "name": "eth2"    },
     {      "address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b255", "name": "polygon1"    },
     {      "address": "0x2b1c74aaed16b60833aa1d2e0776b8be53bbb6d8", "name": "optimism2095"    }
+  ],
+  "storj_scanner_address_srv1": [
+    {      "address": "192.168.1.102:14002", "name": "eth"    },
+    {      "address": "192.168.1.102:14003", "name": "eth1"    },
+    {      "address": "192.168.1.102:14004", "name": "eth2"    },
+    {      "address": "192.168.1.102:14012", "name": "eth3"    },
+    {      "address": "192.168.1.102:14013", "name": "eth4"    },
+    {      "address": "192.168.1.102:14014", "name": "eth5"    }
+  ],
+  "storj_scanner_address_srv2": [
+    {      "address": "192.168.1.105:14005", "name": "eth"    },
+    {      "address": "192.168.1.105:14006", "name": "eth1"    },
+    {      "address": "192.168.1.105:14007", "name": "eth2"    },
+    {      "address": "192.168.1.105:14008", "name": "eth3"    },
+    {      "address": "192.168.1.105:14009", "name": "eth4"    },
+    {      "address": "192.168.1.105:14010", "name": "eth5"    }
   ]
 }

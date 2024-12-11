@@ -52,14 +52,17 @@ public class HttpClientResponse {
         //looking to get score and value
         String scJsParent = "lowestScores";
         String scJsChild = "score";
+        String nestedValue = "";
 
         JSONObject jsonObject = new JSONObject(this.getScoreValue(localContentTest));
 
         JSONArray nestedJsonArray = jsonObject.getJSONArray(scJsParent);
-        JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);
-        String nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
-
-        System.out.println(nestedValue);
+        if(nestedJsonArray != null) {
+            JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);
+            if(nestedJsonObject != null) {
+                nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
+            }
+        }
 
         return nestedValue;
     }
