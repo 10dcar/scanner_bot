@@ -7,6 +7,10 @@ trimit raspuns inapoi cu rezultatul interogarii folosind NUMARUL de mai sus
 * */
 
 TO DO
+//de verificat daca merge fara copy urile din Dockerfile
+//COPY --from=build /app/target/dependency /app/dependency
+//COPY --from=build /app/target/classes /app/dependency
+
 //statistici server utilisation:
 //1 rulezi docker run cu anumiti parametri care porneste o instanta de node-exporter
 //2 confiurare si pornire a unui alt docker, tot cu docker run (dar si de configurat), un prometheus care colecteaza datele produse

@@ -24,6 +24,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     public String getBotUsername() {
         JsonReader json = new JsonReader();
         TelegramBotData jsonRed;
+
         try {
             jsonRed = json.readBot();
 
