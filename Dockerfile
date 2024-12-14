@@ -23,7 +23,7 @@ COPY --from=build /app/target/forta_linux_java_scanner_bot-1.0-SNAPSHOT.jar /app
 # Copy the dependencies
 COPY --from=build /app/target/dependency /app/dependency
 COPY --from=build /app/target/classes /app/dependency
-COPY --from=build /app/target/dependency/config.json /app/target/dependency
+COPY --from=build /app/src/main/resources/config.json /app/target/dependency
 
 # Set the classpath and run the Java application
 CMD ["sh", "-c", "export CLASSPATH=/app/scanner_bot.jar:/app/dependency/* && java bot.telegram.Main"]
