@@ -18,8 +18,10 @@ public class JsonReader {
     public JsonReader() {
         String jsonPathName;
 
+        jsonPathName = "./dependency/config.json";
+        //jsonPathName = "./src/main/resources/config.json";
         //jsonPathName = "./target/dependency/config.json";
-        jsonPathName = "/app/dependency/config.json";
+        //jsonPathName = "/app/dependency/config.json";
 
         try {
             File file = new File(jsonPathName);

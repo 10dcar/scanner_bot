@@ -1,6 +1,7 @@
 package bot.telegram;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -25,9 +26,17 @@ public class HttpClientLocal {
             return new HttpClientResponse(response.statusCode(),
                     response.headers().allValues("content-type"),
                     response.body());
-        } catch (IOException | InterruptedException e) {
+        } catch (ConnectException e) {
             e.printStackTrace();
+            // Handle ConnectException
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            // Handle IOException
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            // Handle InterruptedException
         }
+
         return null;
     }
 }
