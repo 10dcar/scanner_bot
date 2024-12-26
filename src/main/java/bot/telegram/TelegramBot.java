@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -71,6 +72,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         HttpClientResponse rsp = hcl.interrogate(this.bot.getUrl(), this.bot.getAddress());
         score = rsp.getScore(this.localContentTest);
 
+        System.out.println(this.bot.getMessage() + score + " ");
         this.send(this.bot.getMessage() + score + " ");
         /*try {
             //https://api.forta.network/stats/sla/scanner/0x2b1c74aaed16b60833aa1d2e0776b8be53bbb6d8
