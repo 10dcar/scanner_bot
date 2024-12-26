@@ -1,7 +1,6 @@
 package bot.telegram;
 
 import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 public class Main {
@@ -16,8 +15,8 @@ public class Main {
             TelegramBot bot = new TelegramBot(fortaBot, localContentTest);
 
             botsApi.registerBot(bot);
-            /*PeriodicUpdate pa = new PeriodicUpdate(bot);
-            pa.periodicUpdate();*/
+            PeriodicUpdate pa = new PeriodicUpdate(bot);
+            pa.periodicUpdate();
             break;
         }
         for (StorjBot storjBot : jsonBots.getStorj()) {

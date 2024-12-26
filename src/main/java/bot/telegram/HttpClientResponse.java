@@ -1,6 +1,5 @@
 package bot.telegram;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
@@ -29,10 +28,7 @@ public class HttpClientResponse {
         String jsonPathName;
         String content;
 
-        //jsonPathName = "/app/resources/scannertest.json";
-        //jsonPathName = "./src/main/resources/scannertest.json";
-        //jsonPathName = "./target/classes/scannertest.json";
-        jsonPathName = "/app/dependency/scannertest.json";
+        jsonPathName = "./src/main/resources/scannertest.json";
 
         if(localContentTest) {
             try {
@@ -56,12 +52,9 @@ public class HttpClientResponse {
 
         JSONObject jsonObject = new JSONObject(this.getScoreValue(localContentTest));
 
-        JSONArray nestedJsonArray = jsonObject.getJSONArray(scJsParent);
-        if(nestedJsonArray != null) {
-            JSONObject nestedJsonObject = nestedJsonArray.getJSONObject(0);
-            if(nestedJsonObject != null) {
-                nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
-            }
+        JSONObject nestedJsonObject = jsonObject.getJSONObject(scJsParent);
+        if(nestedJsonObject != null) {
+            nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
         }
 
         return nestedValue;
@@ -70,6 +63,7 @@ public class HttpClientResponse {
     public Integer getResponseStatus(){
         return this.statusCode;
     }
+
     public String getResponseBody(){
         return this.body;
     }

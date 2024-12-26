@@ -15,7 +15,6 @@ import java.util.TimerTask;
 
 public class TelegramBot extends TelegramLongPollingBot {
     long chatId;
-    String botToken;
     Boolean localContentTest;
     Bot bot;
 
@@ -28,38 +27,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return  this.bot.getName();
-
-        /*TelegramBotData jsonRed;
-
-        try {
-            jsonRed = this.json.readBot();
-
-            return jsonRed.getBotName();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;*/
     }
 
     @Override
     public String getBotToken() {
         return this.bot.getToken();
-
-        /*for (StorjBot storjBot : this.jsonBot.getStorj()) {
-            storjBot.getAddress();
-        }*/
-        /*TelegramBotData jsonRed;
-
-        try {
-            jsonRed = this.json.readBot();
-            if(jsonRed != null) {
-                botToken = jsonRed.getBotToken();
-                return botToken;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;*/
     }
 
     @Override
@@ -67,29 +39,18 @@ public class TelegramBot extends TelegramLongPollingBot {
         String score = "Null";
         this.chatId = update.getMessage().getChatId();
 
-        System.out.println("onUpdateReceived::::::"+update.getMessage().getText() + " " + this.bot.getUrl() + " " + this.bot.getAddress());
+        System.out.println("UpdateReceived::::::");
+        System.out.println(update.getMessage().getText() + " " + this.bot.getUrl() + " " + this.bot.getAddress());
+
+        System.out.println(this.getScore());
+        this.send(this.getScore());
+    }
+
+    public String getScore() {
         HttpClientLocal hcl = new HttpClientLocal();
         HttpClientResponse rsp = hcl.interrogate(this.bot.getUrl(), this.bot.getAddress());
-        score = rsp.getScore(this.localContentTest);
 
-        System.out.println(this.bot.getMessage() + score + " ");
-        this.send(this.bot.getMessage() + score + " ");
-        /*try {
-            //https://api.forta.network/stats/sla/scanner/0x2b1c74aaed16b60833aa1d2e0776b8be53bbb6d8
-            score = this.getScore("forta_scanner_address");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        this.send("Scorul actual Forta este: " + score + " ");
-        try {
-            score = this.getScore("storj_scanner_address_srv1");
-            //score = this.getScore("storj_scanner_address_srv2");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
-
-        //this.send("Scorul actual Storj este: " + score + " ");
+        return this.bot.getMessage() + rsp.getScore(this.localContentTest);
     }
 
     public void send(String messageText){
