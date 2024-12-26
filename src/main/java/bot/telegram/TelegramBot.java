@@ -58,13 +58,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     public String getScore() {
         String scores = null;
         for (FortaBot fortaBot : this.jsonBots.getForta()) {
-            System.out.println(fortaBot.getUrl() + " " + fortaBot.getAddress());
+            //System.out.println(fortaBot.getUrl() + " " + fortaBot.getAddress());
             HttpClientLocal hcl = new HttpClientLocal();
             HttpClientResponse rsp = hcl.interrogate(fortaBot.getUrl()+fortaBot.getAddress());
             scores += "Name: " + fortaBot.getName() + " " + fortaBot.getMessage() + rsp.getScore(this.localContentTest) + "\n";
         }
         for (StorjBot storjBot : this.jsonBots.getStorj()) {
-            System.out.println(storjBot.getUrl() + " " + storjBot.getAddress());
+            //System.out.println(storjBot.getUrl() + " " + storjBot.getAddress());
             HttpClientLocal hcl = new HttpClientLocal();
             HttpClientResponse rsp = hcl.interrogate(storjBot.getUrl()+":"+storjBot.getAddress());
             scores += "Name: " + storjBot.getName() + " " + storjBot.getMessage() + rsp.getScore(this.localContentTest) + "\n";
