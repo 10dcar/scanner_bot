@@ -21,7 +21,7 @@ public class HttpClientLocal {
                     .build();
             HttpResponse<String> response = httpClient.send(request,
                     HttpResponse.BodyHandlers.ofString());
-            System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
+            //System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
 
             return new HttpClientResponse(response.statusCode(),
                     response.headers().allValues("content-type"),

@@ -19,9 +19,9 @@ public class HttpClientResponse {
         this.headers = headers;
         this.body = body;
 
-        System.out.println("Status code: " + statusCode);
+        /*System.out.println("Status code: " + statusCode);
         System.out.println("Headers: " + headers);
-        System.out.println("Body: " + body);
+        System.out.println("Body: " + body);*/
     }
 
     public String getScoreValue(Boolean localContentTest){
