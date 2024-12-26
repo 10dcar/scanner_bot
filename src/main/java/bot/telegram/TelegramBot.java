@@ -67,7 +67,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         String score = "Null";
         this.chatId = update.getMessage().getChatId();
 
-        System.out.println(update.getMessage().getText() + " " + this.bot.getUrl() + " " + this.bot.getAddress());
+        System.out.println("onUpdateReceived::::::"+update.getMessage().getText() + " " + this.bot.getUrl() + " " + this.bot.getAddress());
         HttpClientLocal hcl = new HttpClientLocal();
         HttpClientResponse rsp = hcl.interrogate(this.bot.getUrl(), this.bot.getAddress());
         score = rsp.getScore(this.localContentTest);
