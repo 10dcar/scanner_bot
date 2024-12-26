@@ -12,7 +12,7 @@ public class TimerUpdate extends TimerTask {
     @Override
     public void run() {
         try {
-            String fortaScore = this.bot.getScore("forta_scanner_address");
+            /*String fortaScore = this.bot.getScore("forta_scanner_address");
 
             System.out.println("!!!!!Timed update Forta score: "+fortaScore + " ");
             try{
@@ -20,7 +20,7 @@ public class TimerUpdate extends TimerTask {
                     this.bot.send(fortaScore);
                 }
             } catch (NumberFormatException e) { }
-            String storjScore = this.bot.getScore("storj_scanner_address_srv1");
+            String storjScore = this.bot.getScore("storj_scanner_address_srv1");*/
 
             //foreach
             /*System.out.println("!!!!!Timed update Storj score: "+storjScore + " ");

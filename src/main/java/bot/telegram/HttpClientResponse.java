@@ -50,8 +50,8 @@ public class HttpClientResponse {
     }
     public String getScore(Boolean localContentTest){
         //looking to get score and value
-        String scJsParent = "lowestScores";
-        String scJsChild = "score";
+        String scJsParent = "statistics";
+        String scJsChild = "avg";
         String nestedValue = "";
 
         JSONObject jsonObject = new JSONObject(this.getScoreValue(localContentTest));

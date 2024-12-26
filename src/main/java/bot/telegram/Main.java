@@ -1,6 +1,5 @@
 package bot.telegram;
 
-import com.google.common.base.Strings;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -10,13 +9,23 @@ public class Main {
         // Take the content from local file for test or online localContent = true/false
         Boolean localContentTest = false;
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-        TelegramBot bot = new TelegramBot(localContentTest);
+        JsonReader jsonBots = new JsonReader();
 
-        //try{
+        for (FortaBot fortaBot : jsonBots.getForta()) {
+            //System.out.println("main bot name: "+fortaBot.getAddress());
+            TelegramBot bot = new TelegramBot(fortaBot, localContentTest);
+
             botsApi.registerBot(bot);
+            /*PeriodicUpdate pa = new PeriodicUpdate(bot);
+            pa.periodicUpdate();*/
+            break;
+        }
+        for (StorjBot storjBot : jsonBots.getStorj()) {
+            /*TelegramBot bot = new TelegramBot(storjBot, localContentTest);
 
-            PeriodicUpdate pa = new PeriodicUpdate(bot);
-            pa.periodicUpdate();
-        //} catch(TelegramApiException e){ }
+            botsApi.registerBot(bot);*/
+            /*PeriodicUpdate pa = new PeriodicUpdate(bot);
+            pa.periodicUpdate();*/
+        }
     }
 }

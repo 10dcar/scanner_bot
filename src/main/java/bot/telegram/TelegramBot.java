@@ -16,32 +16,41 @@ public class TelegramBot extends TelegramLongPollingBot {
     long chatId;
     String botToken;
     Boolean localContentTest;
+    Bot bot;
 
-    public TelegramBot(Boolean localContentTest){
+    public TelegramBot(Bot bot, Boolean localContentTest){
         this.localContentTest = localContentTest;
+        // read all the interrogation data
+        this.bot = bot;
     }
+
     @Override
     public String getBotUsername() {
-        JsonReader json = new JsonReader();
-        TelegramBotData jsonRed;
+        return  this.bot.getName();
+
+        /*TelegramBotData jsonRed;
 
         try {
-            jsonRed = json.readBot();
+            jsonRed = this.json.readBot();
 
             return jsonRed.getBotName();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return null;*/
     }
 
     @Override
     public String getBotToken() {
-        JsonReader json = new JsonReader();
-        TelegramBotData jsonRed;
+        return this.bot.getToken();
+
+        /*for (StorjBot storjBot : this.jsonBot.getStorj()) {
+            storjBot.getAddress();
+        }*/
+        /*TelegramBotData jsonRed;
 
         try {
-            jsonRed = json.readBot();
+            jsonRed = this.json.readBot();
             if(jsonRed != null) {
                 botToken = jsonRed.getBotToken();
                 return botToken;
@@ -49,7 +58,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return null;*/
     }
 
     @Override
@@ -57,8 +66,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         String score = "Null";
         this.chatId = update.getMessage().getChatId();
 
-        System.out.println(update.getMessage().getText());
-        try {
+        System.out.println(update.getMessage().getText() + " " + this.bot.getUrl() + " " + this.bot.getAddress());
+        HttpClientLocal hcl = new HttpClientLocal();
+        HttpClientResponse rsp = hcl.interrogate(this.bot.getUrl(), this.bot.getAddress());
+        score = rsp.getScore(this.localContentTest);
+
+        this.send(this.bot.getMessage() + score + " ");
+        /*try {
+            //https://api.forta.network/stats/sla/scanner/0x2b1c74aaed16b60833aa1d2e0776b8be53bbb6d8
             score = this.getScore("forta_scanner_address");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -70,33 +85,16 @@ public class TelegramBot extends TelegramLongPollingBot {
             //score = this.getScore("storj_scanner_address_srv2");
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        //foreach
-        this.send("Scorul actual Storj este: " + score + " ");
-    }
+        }*/
 
-    public String getScore(String client) throws Exception {
-        HttpClientLocal hcl = new HttpClientLocal();
-        JsonReader json = new JsonReader();
-        ArrayList<HttpClientData> jsonScannerArr;
-        String scannerAddress;
-
-        jsonScannerArr = json.readClient(client);
-        try {
-            scannerAddress = jsonScannerArr.get(3).getClientAddress();
-            HttpClientResponse hcr = hcl.interrogate(json.readScoreApi(), scannerAddress);
-
-            return hcr.getScore(this.localContentTest);
-        } catch (IndexOutOfBoundsException e) { }
-
-        return "";
+        //this.send("Scorul actual Storj este: " + score + " ");
     }
 
     public void send(String messageText){
         if(this.chatId > 0) {
             SendMessage message = SendMessage.builder()
                     .chatId(this.chatId + "")
-                    .text("You said: " + messageText).build();
+                    .text(messageText).build();
             try {
                 execute(message);
             } catch (TelegramApiException e) {
