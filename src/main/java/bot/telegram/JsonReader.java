@@ -35,9 +35,9 @@ public class JsonReader {
     public Boolean readFortaBots(BotDataDefinition fortaStorj) {
         this.forta = new ArrayList<>();
         for (Map.Entry<String, ScannerDetails> entry : fortaStorj.getForta().entrySet()) {
-            System.out.println(entry.getValue().getScoreApiUrl() + " " + entry.getValue().getTelegramBotToken());
+            //System.out.println(entry.getValue().getScoreApiUrl() + " " + entry.getValue().getTelegramBotToken());
             for (ScannerAddress addressData : entry.getValue().getFortaScannerAddress()) {
-                System.out.println(addressData.getName()+" "+addressData.getAddress());
+                //System.out.println(addressData.getName()+" "+addressData.getAddress());
                 forta.add(new FortaBot(addressData.getName(), addressData.getAddress(), entry.getValue().getScoreApiUrl(), entry.getValue().getTelegramBotToken()));
             }
         }
@@ -47,9 +47,9 @@ public class JsonReader {
     public Boolean readStorjBots(BotDataDefinition fortaStorj) {
         this.storj = new ArrayList<>();
         for (Map.Entry<String, ScannerDetails> entry : fortaStorj.getStorj().entrySet()) {
-            System.out.println(entry.getValue().getScoreApiUrl());
+            //System.out.println(entry.getValue().getScoreApiUrl());
             for (ScannerAddress addressData : entry.getValue().getStorjScannerAddress()) {
-                System.out.println(addressData.getName()+" "+addressData.getAddress());
+                //System.out.println(addressData.getName()+" "+addressData.getAddress());
                 storj.add(new StorjBot(addressData.getName(), addressData.getAddress(), entry.getValue().getScoreApiUrl(), entry.getValue().getTelegramBotToken()));
             }
         }
