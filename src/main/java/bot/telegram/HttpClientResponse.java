@@ -50,11 +50,15 @@ public class HttpClientResponse {
         String scJsChild = "avg";
         String nestedValue = "";
 
-        JSONObject jsonObject = new JSONObject(this.getScoreValue(localContentTest));
+        try {
+            JSONObject jsonObject = new JSONObject(this.getScoreValue(localContentTest));
 
-        JSONObject nestedJsonObject = jsonObject.getJSONObject(scJsParent);
-        if(nestedJsonObject != null) {
-            nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
+            JSONObject nestedJsonObject = jsonObject.getJSONObject(scJsParent);
+            if (nestedJsonObject != null) {
+                nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
+            }
+        } catch(Exception e){
+            nestedValue = this.getResponseBody();
         }
 
         return nestedValue;

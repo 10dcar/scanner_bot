@@ -7,9 +7,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.net.http.HttpTimeoutException;
+import java.util.concurrent.TimeoutException;
 
 public class HttpClientLocal {
-    public HttpClientResponse interrogate(String scoreApi, String scannerAddress) {
+    public HttpClientResponse interrogate(String address) {
         HttpClient httpClient = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(10))
@@ -17,24 +19,29 @@ public class HttpClientLocal {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
-                    .uri(URI.create(scoreApi+scannerAddress))
+                    .uri(URI.create(address))
                     .build();
-            HttpResponse<String> response = httpClient.send(request,
-                    HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = null;
+            try {
+                response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            } catch (HttpTimeoutException ex){
+
+            }
+
             //System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
 
-            return new HttpClientResponse(response.statusCode(),
-                    response.headers().allValues("content-type"),
-                    response.body());
+            if(response != null) {
+                return new HttpClientResponse(response.statusCode(),
+                        response.headers().allValues("content-type"),
+                        response.body());
+            }
+            return new HttpClientResponse(400, null, null);
         } catch (ConnectException e) {
             e.printStackTrace();
-            // Handle ConnectException
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-            // Handle IOException
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            // Handle InterruptedException
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
 
         return null;

@@ -10,21 +10,9 @@ public class Main {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         JsonReader jsonBots = new JsonReader();
 
-        for (FortaBot fortaBot : jsonBots.getForta()) {
-            //System.out.println("main bot name: "+fortaBot.getAddress());
-            TelegramBot bot = new TelegramBot(fortaBot, localContentTest);
-
-            botsApi.registerBot(bot);
-            PeriodicUpdate pa = new PeriodicUpdate(bot);
-            pa.periodicUpdate();
-            break;
-        }
-        for (StorjBot storjBot : jsonBots.getStorj()) {
-            /*TelegramBot bot = new TelegramBot(storjBot, localContentTest);
-
-            botsApi.registerBot(bot);*/
-            /*PeriodicUpdate pa = new PeriodicUpdate(bot);
-            pa.periodicUpdate();*/
-        }
+        TelegramBot bot = new TelegramBot(jsonBots, localContentTest);
+        botsApi.registerBot(bot);
+        PeriodicUpdate pa = new PeriodicUpdate(bot);
+        pa.periodicUpdate();
     }
 }
