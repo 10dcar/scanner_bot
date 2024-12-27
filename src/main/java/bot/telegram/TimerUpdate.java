@@ -14,7 +14,7 @@ public class TimerUpdate extends TimerTask {
         try {
             String fortaScore = this.bot.getScore();
 
-            System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + "): "+fortaScore + " ");
+            System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");//: "+fortaScore + "
             try{
                 if((Float.compare(Float.parseFloat(fortaScore), 0.8f) < 0)) {
                     this.bot.send(fortaScore);
