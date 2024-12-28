@@ -41,6 +41,7 @@ public class HttpClientResponse {
         else {
             content = this.getResponseBody();
         }
+        System.out.println("=============Content============\n"+content);
         return content;
     }
     public String getScore(Boolean localContentTest){

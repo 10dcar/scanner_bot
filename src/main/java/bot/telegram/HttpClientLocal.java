@@ -22,11 +22,11 @@ public class HttpClientLocal {
             try {
                 response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             } catch (HttpConnectTimeoutException ex){
-                ex.printStackTrace();
+                //ex.printStackTrace();
             } catch (HttpTimeoutException ex){
-                ex.printStackTrace();
+                //ex.printStackTrace();
             } catch (java.net.ConnectException ex){
-                ex.printStackTrace();
+                //ex.printStackTrace();
             }
 
             //System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
