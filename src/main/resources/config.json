@@ -28,7 +28,7 @@
     "1": {
       "telegram_bot_name": "forta_linux_java_scanner_bot",
       "telegram_bot_token": "7544602708:AAGlcbAut-HnUzlyW62RoE0cuNlh5V0toqE",
-      "score_api_url": "https://192.168.1.102",
+      "score_api_url": "http://192.168.1.102",
       "storj_scanner_address": [
         {
           "address": "14002",
@@ -59,7 +59,7 @@
     "2": {
       "telegram_bot_name": "forta_linux_java_scanner_bot",
       "telegram_bot_token": "7544602708:AAGlcbAut-HnUzlyW62RoE0cuNlh5V0toqE",
-      "score_api_url": "https://192.168.1.105",
+      "score_api_url": "http://192.168.1.105",
       "storj_scanner_address": [
         {
           "address": "14005",
