@@ -60,6 +60,8 @@ public class HttpClientLocal {
                 //ex.printStackTrace();
             } catch (java.net.ConnectException ex){
                 //ex.printStackTrace();
+            } catch (IOException ex){
+                //ex.printStackTrace();
             }
 
             System.out.print("scannerAddress::::: "+address);
@@ -72,10 +74,6 @@ public class HttpClientLocal {
             }
             System.out.println(" code::::: 400");
             return new HttpClientResponse(400, null, null);
-        } catch (ConnectException e) {
-            e.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
