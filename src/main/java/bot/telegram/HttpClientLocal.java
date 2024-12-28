@@ -32,12 +32,12 @@ public class HttpClientLocal {
         try {
             sslContext = SSLContext.getInstance("SSL");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         try {
             sslContext.init(null, trustAllCerts, new SecureRandom());
         } catch (KeyManagementException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         // Create an HttpClient that uses the custom
         HttpClient httpClient = HttpClient.newBuilder()
