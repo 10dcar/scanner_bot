@@ -3,11 +3,8 @@ package bot.telegram;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.net.http.*;
 import java.time.Duration;
-import java.net.http.HttpTimeoutException;
 import java.util.concurrent.TimeoutException;
 
 public class HttpClientLocal {
@@ -24,6 +21,8 @@ public class HttpClientLocal {
             HttpResponse<String> response = null;
             try {
                 response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            } catch (HttpConnectTimeoutException ex){
+                ex.printStackTrace();
             } catch (HttpTimeoutException ex){
                 ex.printStackTrace();
             } catch (java.net.ConnectException ex){
