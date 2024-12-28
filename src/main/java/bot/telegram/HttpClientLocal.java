@@ -30,13 +30,15 @@ public class HttpClientLocal {
                 //ex.printStackTrace();
             }
 
-            //System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
+            System.out.print("scannerAddress::::: "+address);
 
             if(response != null) {
+                System.out.println(" code::::: "+response.statusCode());
                 return new HttpClientResponse(response.statusCode(),
                         response.headers().allValues("content-type"),
                         response.body());
             }
+            System.out.println(" code::::: 400");
             return new HttpClientResponse(400, null, null);
         } catch (ConnectException e) {
             e.printStackTrace();
