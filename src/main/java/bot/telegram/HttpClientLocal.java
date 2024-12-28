@@ -14,6 +14,7 @@ public class HttpClientLocal {
                 .connectTimeout(Duration.ofSeconds(10))
                 .build();
         try {
+            System.out.println("Call address::::"+address);
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create(address))
