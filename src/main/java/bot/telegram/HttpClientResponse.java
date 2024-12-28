@@ -12,7 +12,6 @@ public class HttpClientResponse {
     Integer statusCode;
     List<String> headers;
     String body;
-    JSONObject jo;
 
     public HttpClientResponse(Integer statusCode, List<String> headers, String body) {
         this.statusCode = statusCode;

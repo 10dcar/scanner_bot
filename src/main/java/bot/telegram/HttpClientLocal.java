@@ -25,7 +25,9 @@ public class HttpClientLocal {
             try {
                 response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             } catch (HttpTimeoutException ex){
-
+                ex.printStackTrace();
+            } catch (java.net.ConnectException ex){
+                ex.printStackTrace();
             }
 
             //System.out.println("scoreApi: " + scoreApi + " scannerAddress: "+scannerAddress);
