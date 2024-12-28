@@ -31,27 +31,27 @@
       "score_api_url": "http://192.168.1.102",
       "storj_scanner_address": [
         {
-          "address": "14002",
+          "address": "28967",
           "name": "eth"
         },
         {
-          "address": "14003",
+          "address": "28968",
           "name": "eth1"
         },
         {
-          "address": "14004",
+          "address": "28969",
           "name": "eth2"
         },
         {
-          "address": "14012",
+          "address": "28976",
           "name": "eth3"
         },
         {
-          "address": "14013",
+          "address": "28977",
           "name": "eth4"
         },
         {
-          "address": "14014",
+          "address": "28978",
           "name": "eth5"
         }
       ]
@@ -62,27 +62,27 @@
       "score_api_url": "http://192.168.1.105",
       "storj_scanner_address": [
         {
-          "address": "14005",
+          "address": "28970",
           "name": "eth"
         },
         {
-          "address": "14006",
+          "address": "28971",
           "name": "eth1"
         },
         {
-          "address": "14007",
+          "address": "28972",
           "name": "eth2"
         },
         {
-          "address": "14008",
+          "address": "28973",
           "name": "eth3"
         },
         {
-          "address": "14009",
+          "address": "28974",
           "name": "eth4"
         },
         {
-          "address": "14010",
+          "address": "28975",
           "name": "eth5"
         }
       ]
