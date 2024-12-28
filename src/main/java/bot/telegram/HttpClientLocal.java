@@ -2,8 +2,6 @@ package bot.telegram;
 
 import java.io.IOException;
 import java.net.ConnectException;
-import java.net.InetSocketAddress;
-import java.net.ProxySelector;
 import java.net.URI;
 import java.net.http.*;
 import java.security.KeyManagementException;
@@ -19,8 +17,6 @@ import java.net.http.HttpResponse;
 
 public class HttpClientLocal {
     public HttpClientResponse interrogate(String address) {
-        // Define the source address (local address) to bind to InetSocketAddress 0 means any available port
-        InetSocketAddress sourceAddress = new InetSocketAddress("192.168.1.102", 0);
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
@@ -45,7 +41,6 @@ public class HttpClientLocal {
         }
         // Create an HttpClient that uses the custom
         HttpClient httpClient = HttpClient.newBuilder()
-                .proxy(ProxySelector.of(sourceAddress))
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(10))
                 .sslContext(sslContext)
