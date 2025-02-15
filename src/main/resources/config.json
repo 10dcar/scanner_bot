@@ -1,0 +1,89 @@
+{
+  "botInfo": {
+    "telegram_bot_name": "forta_linux_java_scanner_bot",
+    "telegram_bot_token": "7544602708:AAGlcbAut-HnUzlyW62RoE0cuNlh5V0toqE"
+  },
+  "forta": {
+    "1": {
+      "score_api_url": "https://api.forta.network/stats/sla/scanner/",
+      "forta_scanner_address": [
+        {
+          "scanner_address": "0x2b1c74aaed16b60833aa1d2e0776b8be53bbb6d8",
+          "scanner_name": "optimism2095"
+        },
+        {
+          "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b256",
+          "scanner_name": "eth1"
+        },
+        {
+          "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b257",
+          "scanner_name": "eth2"
+        },
+        {
+          "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b255",
+          "scanner_name": "polygon1"
+        }
+      ]
+    }
+  },
+  "storj": {
+    "1": {
+      "score_api_url": "http://192.168.1.102",
+      "storj_node_address": [
+        {
+          "node_address": "28967",
+          "node_name": "eth"
+        },
+        {
+          "node_address": "28968",
+          "node_name": "eth1"
+        },
+        {
+          "node_address": "28969",
+          "node_name": "eth2"
+        },
+        {
+          "node_address": "28976",
+          "node_name": "eth3"
+        },
+        {
+          "node_address": "28977",
+          "node_name": "eth4"
+        },
+        {
+          "node_address": "28978",
+          "node_name": "eth5"
+        }
+      ]
+    },
+    "2": {
+      "score_api_url": "http://192.168.1.105",
+      "storj_node_address": [
+        {
+          "node_address": "28970",
+          "node_name": "eth"
+        },
+        {
+          "node_address": "28971",
+          "node_name": "eth1"
+        },
+        {
+          "node_address": "28972",
+          "node_name": "eth2"
+        },
+        {
+          "node_address": "28973",
+          "node_name": "eth3"
+        },
+        {
+          "node_address": "28974",
+          "node_name": "eth4"
+        },
+        {
+          "node_address": "28975",
+          "node_name": "eth5"
+        }
+      ]
+    }
+  }
+}
