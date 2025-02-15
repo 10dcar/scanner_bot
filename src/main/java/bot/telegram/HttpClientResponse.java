@@ -17,29 +17,23 @@ public class HttpClientResponse {
         this.statusCode = statusCode;
         this.headers = headers;
         this.body = body;
-
-        /*System.out.println("Status code: " + statusCode);
-        System.out.println("Headers: " + headers);
-        System.out.println("Body: " + body);*/
     }
 
     public String getScoreValue(Boolean localContentTest){
-        String jsonPathName;
         String content;
-
-        jsonPathName = "./src/main/resources/scannertest.json";
 
         if(localContentTest) {
             try {
-                content = new String(Files.readAllBytes(Paths.get(jsonPathName)));
+                content = new String(Files.readAllBytes(Paths.get(BotConstants.jsonPathNameTest)));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
+                //problema e ca nu vad cum o arunc ca metoda nu are throws in definitie
                 throw new RuntimeException(e);
             }
         }
         else {
-            content = this.getResponseBody();
+            content = this.body;
         }
         return content;
     }
@@ -57,17 +51,9 @@ public class HttpClientResponse {
                 nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
             }
         } catch(Exception e){
-            nestedValue = this.getResponseBody();
+            nestedValue = this.body;
         }
 
         return nestedValue;
-    }
-
-    public Integer getResponseStatus(){
-        return this.statusCode;
-    }
-
-    public String getResponseBody(){
-        return this.body;
     }
 }

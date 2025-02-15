@@ -2,7 +2,9 @@ package bot.telegram;
 
 import java.util.TimerTask;
 
-public class TimerUpdate extends TimerTask {
+public class
+
+TimerUpdate extends TimerTask {
     TelegramBot bot;
 
     public TimerUpdate(TelegramBot bot) {
@@ -12,7 +14,7 @@ public class TimerUpdate extends TimerTask {
     @Override
     public void run() {
         try {
-            String fortaScore = this.bot.getScore();
+            String fortaScore = this.bot.getScoreAll();
 
             System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");//: "+fortaScore + "
             try{

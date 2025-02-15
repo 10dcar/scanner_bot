@@ -16,7 +16,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class HttpClientLocal {
-    public HttpClientResponse interrogate(String address) {
+    public SSLContext HandleSSL(){
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
@@ -33,17 +33,23 @@ public class HttpClientLocal {
             sslContext = SSLContext.getInstance("SSL");
         } catch (NoSuchAlgorithmException e) {
             //e.printStackTrace();
+            System.out.println("HttpClientLocal.java - NoSuchAlgorithmException");
         }
         try {
             sslContext.init(null, trustAllCerts, new SecureRandom());
         } catch (KeyManagementException e) {
             //e.printStackTrace();
+            System.out.println("HttpClientLocal.java - KeyManagementException");
         }
+        return sslContext;
+    }
+
+    public HttpClientResponse interrogate(String address) {
         // Create an HttpClient that uses the custom
         HttpClient httpClient = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(10))
-                .sslContext(sslContext)
+                .sslContext(this.HandleSSL())
                 .build();;
         try {
             System.out.println("Call address::::"+address);
@@ -56,12 +62,16 @@ public class HttpClientLocal {
                 response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             } catch (HttpConnectTimeoutException ex){
                 //ex.printStackTrace();
+                System.out.println("HttpClientLocal.java - HttpConnectTimeoutException");
             } catch (HttpTimeoutException ex){
                 //ex.printStackTrace();
+                System.out.println("HttpClientLocal.java - HttpTimeoutException");
             } catch (java.net.ConnectException ex){
                 //ex.printStackTrace();
+                System.out.println("HttpClientLocal.java - ConnectException");
             } catch (IOException ex){
                 //ex.printStackTrace();
+                System.out.println("HttpClientLocal.java - IOException");
             }
 
             System.out.print("scannerAddress::::: "+address);
