@@ -49,7 +49,7 @@ public class BotDataDefinition {
         return scores;
     }
     public String interrogateNode(Boolean localContentTest) {
-        String scores = null;
+        String scores = "";
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
             System.out.println("Field " + entry.getKey() + ":");
             System.out.println("  Score API URL: " + entry.getValue().getScore_api_url());
