@@ -14,7 +14,7 @@ public class JsonReader {
     ObjectMapper objectMapper;
     BotDataDefinition objReaded;
 
-    public JsonReader() {
+    public JsonReader(Boolean localContentTest) {
         this.objectMapper = new ObjectMapper();
 
         try {
@@ -22,8 +22,8 @@ public class JsonReader {
             this.objReaded = objectMapper.readValue(new File(BotConstants.jsonPathName), BotDataDefinition.class);
 
             this.objReaded.botInfo();
-            this.objReaded.interrogateScanner();
-            this.objReaded.interrogateNode();
+            this.objReaded.interrogateScanner(localContentTest);
+            this.objReaded.interrogateNode(localContentTest);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -23,7 +23,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     public TelegramBot(Boolean localContentTest){
         this.localContentTest = localContentTest;
         // read all the interrogation data
-        this.jsonBots = new JsonReader();
+        this.jsonBots = new JsonReader(localContentTest);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public String getScoreAll(){
-        String scoreForta = this.jsonBots.getObjReaded().interrogateScanner();
-        String scoreStorj = this.jsonBots.getObjReaded().interrogateNode();
+        String scoreForta = this.jsonBots.getObjReaded().interrogateScanner(this.localContentTest);
+        String scoreStorj = this.jsonBots.getObjReaded().interrogateNode(this.localContentTest);
 
         return scoreForta+" "+scoreStorj;
     }
