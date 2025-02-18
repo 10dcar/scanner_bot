@@ -42,7 +42,8 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        String score = this.getScoreAll();
+        Boolean timerUpdate = false;
+        String score = this.getScoreAll(timerUpdate);
         this.chatId = update.getMessage().getChatId();
 
         System.out.println("UpdateReceived::::::" + update.getMessage().getText());
@@ -51,9 +52,9 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.send(score);
     }
 
-    public String getScoreAll(){
-        String scoreForta = this.jsonBots.getObjReaded().interrogateScanner(this.localContentTest);
-        String scoreStorj = this.jsonBots.getObjReaded().interrogateNode(this.localContentTest);
+    public String getScoreAll(Boolean timerUpdate){
+        String scoreForta = this.jsonBots.getObjReaded().interrogateScanner(this.localContentTest, timerUpdate);
+        String scoreStorj = this.jsonBots.getObjReaded().interrogateNode(this.localContentTest, timerUpdate);
 
         return scoreForta+" "+scoreStorj;
     }

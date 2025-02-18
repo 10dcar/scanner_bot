@@ -22,8 +22,6 @@ public class JsonReader {
             this.objReaded = objectMapper.readValue(new File(BotConstants.jsonPathName), BotDataDefinition.class);
 
             this.objReaded.botInfo();
-            this.objReaded.interrogateScanner(localContentTest);
-            this.objReaded.interrogateNode(localContentTest);
         } catch (IOException e) {
             e.printStackTrace();
         }

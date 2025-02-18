@@ -13,8 +13,9 @@ TimerUpdate extends TimerTask {
 
     @Override
     public void run() {
+        Boolean timerUpdate = true;
         try {
-            String fortaScore = this.bot.getScoreAll();
+            String fortaScore = this.bot.getScoreAll(timerUpdate);
 
             System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");//: "+fortaScore + "
             try{

@@ -25,7 +25,7 @@ public class BotDataDefinition {
         System.out.println("Bot>>>> {"+this.botInfo.getTelegramBotName() + " " + this.botInfo.getTelegramBotToken()+"}");
         return botInfo;
     }
-    public String interrogateScanner(Boolean localContentTest) {
+    public String interrogateScanner(Boolean localContentTest, Boolean timerUpdate) {
         String scores = "";
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
             System.out.println("Field " + entry.getKey() + ":");
@@ -38,7 +38,7 @@ public class BotDataDefinition {
                 try{
                     if((Float.compare(Float.parseFloat(fortaScore), 0.8f) < 0)) {
                         scores += "NOT Healthy name: " + node.getScanner_name() + " " + rsp.getScore(localContentTest) + "\n";
-                    } else {
+                    } else if (!timerUpdate){
                         scores += "Healthy name: " + node.getScanner_name() + " " + rsp.getScore(localContentTest) + "\n";
                     }
                 } catch (NumberFormatException e) {
@@ -48,13 +48,13 @@ public class BotDataDefinition {
         }
         return scores;
     }
-    public String interrogateNode(Boolean localContentTest) {
+    public String interrogateNode(Boolean localContentTest, Boolean timerUpdate) {
         String scores = "";
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
             System.out.println("Field " + entry.getKey() + ":");
-            System.out.println("  Score API URL: " + entry.getValue().getScore_api_url());
+            System.out.println("Score API URL: " + entry.getValue().getScore_api_url());
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
-                System.out.println("  Node Address: " + node.getNode_address() + ", Node Name: " + node.getNode_name());
+                System.out.println("Node Address: " + node.getNode_address() + ", Node Name: " + node.getNode_name());
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode;
@@ -69,7 +69,9 @@ public class BotDataDefinition {
                 }
                 //daca rsp.getScore() transform in obiect si daca "AllHealthy" != true
                 if(allHealthy) {
-                    scores += "Healthy name: " + node.getNode_name() + " " + allHealthy + "\n";
+                    if (!timerUpdate) {
+                        scores += "Healthy name: " + node.getNode_name() + " " + allHealthy + "\n";
+                    }
                 } else {
                     scores += "NOT Healthy name: " + node.getNode_name() + " " + allHealthy + "\n";
                 }
