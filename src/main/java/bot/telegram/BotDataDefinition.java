@@ -56,6 +56,8 @@ public class BotDataDefinition {
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
                 System.out.println("Node Address: " + node.getNode_address() + ", Node Name: " + node.getNode_name());
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
+                //undeva aici ar trebui sa decida ce e cu el: daca raspunde 404 ce inseamna etc
+
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode;
                 boolean allHealthy = false;

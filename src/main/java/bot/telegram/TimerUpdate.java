@@ -1,5 +1,6 @@
 package bot.telegram;
 
+import java.util.Objects;
 import java.util.TimerTask;
 
 public class
@@ -15,14 +16,12 @@ TimerUpdate extends TimerTask {
     public void run() {
         Boolean timerUpdate = true;
         try {
-            String fortaScore = this.bot.getScoreAll(timerUpdate);
+            String scores = this.bot.getScoreAll(timerUpdate);
 
-            System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");//: "+fortaScore + "
-            try{
-                if((Float.compare(Float.parseFloat(fortaScore), 0.8f) < 0)) {
-                    this.bot.send(fortaScore);
-                }
-            } catch (NumberFormatException e) { }
+            System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");
+            if(!Objects.equals(scores, "")) {
+                this.bot.send(scores);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
