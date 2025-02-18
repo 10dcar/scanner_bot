@@ -64,6 +64,8 @@ public class BotDataDefinition {
                     allHealthy = rootNode.get("AllHealthy").asBoolean();
                 } catch (JsonProcessingException jpe){
                     System.out.println("BotDataDefinition.java - JsonProcessingException");
+                } catch (IllegalArgumentException iae){
+                    System.out.println("BotDataDefinition.java - IllegalArgumentException");
                 }
                 //daca rsp.getScore() transform in obiect si daca "AllHealthy" != true
                 if(allHealthy) {
