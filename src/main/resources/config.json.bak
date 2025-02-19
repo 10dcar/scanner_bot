@@ -18,6 +18,10 @@
         {
           "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b257",
           "scanner_name": "eth2"
+        },
+        {
+          "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b255",
+          "scanner_name": "polygon1"
         }
       ]
     }
