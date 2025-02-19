@@ -56,7 +56,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         String scoreForta = this.jsonBots.getObjReaded().interrogateScanner(this.localContentTest, timerUpdate);
         String scoreStorj = this.jsonBots.getObjReaded().interrogateNode(this.localContentTest, timerUpdate);
 
-        return scoreForta+" "+scoreStorj;
+        return scoreForta+""+scoreStorj;
     }
 
     public void send(String messageText){
