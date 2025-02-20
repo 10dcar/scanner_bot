@@ -20,8 +20,6 @@ public class JsonReader {
         try {
             objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
             this.objReaded = objectMapper.readValue(new File(BotConstants.jsonPathName), BotDataDefinition.class);
-
-            this.objReaded.botInfo();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -12,28 +12,8 @@ public class StorjScoreData {
     }
 
     // Getter and Setter methods
-    public String getStatuses() {
-        return statuses;
-    }
-
-    public void setStatuses(String statuses) {
-        this.statuses = statuses;
-    }
-
-    public String getHelp() {
-        return help;
-    }
-
-    public void setHelp(String help) {
-        this.help = help;
-    }
-
     public boolean isAllHealthy() {
         return allHealthy;
-    }
-
-    public void setAllHealthy(boolean allHealthy) {
-        this.allHealthy = allHealthy;
     }
 
     @Override
