@@ -50,9 +50,10 @@ public class HttpClientLocal {
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(10))
                 .sslContext(this.HandleSSL())
-                .build();;
+                .build();
+
+        System.out.println("Call address::::"+address);
         try {
-            System.out.println("Call address::::"+address);
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create(address))
@@ -73,8 +74,6 @@ public class HttpClientLocal {
                 //ex.printStackTrace();
                 System.out.println("HttpClientLocal.java - IOException");
             }
-
-            System.out.print("scannerAddress::::: "+address);
 
             if(response != null) {
                 System.out.println(" code::::: "+response.statusCode());

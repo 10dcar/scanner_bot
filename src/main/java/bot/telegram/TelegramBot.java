@@ -29,14 +29,12 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         String botName = this.jsonBots.getObjReaded().botInfo().getTelegramBotName();
-        System.out.println("Bot name::"+botName);
         return botName;
     }
 
     @Override
     public String getBotToken() {
         String botToken = this.jsonBots.getObjReaded().botInfo().getTelegramBotToken();
-        System.out.println("Bot token::"+botToken);
         return botToken;
     }
 
