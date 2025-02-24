@@ -33,7 +33,6 @@ public class BotDataDefinition {
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
                 System.out.println("  Node Address: " + node.getScanner_address() + ", Node Name: " + node.getScanner_name());
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
-                //daca < 0.8 atunci pun intr un array list sa numar cate au erori si trec eroare in dreptul lui
                 String fortaScore = rsp.getScore(localContentTest);
                 try{
                     if((Float.compare(Float.parseFloat(fortaScore), 0.8f) < 0)) {
@@ -56,20 +55,8 @@ public class BotDataDefinition {
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
                 System.out.println("Node Address: " + node.getNode_address() + ", Node Name: " + node.getNode_name());
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
-                //undeva aici ar trebui sa decida ce e cu el: daca raspunde 404 ce inseamna etc
 
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode rootNode;
-                boolean allHealthy = false;
-                try {
-                    rootNode = objectMapper.readTree(rsp.getScore(localContentTest));
-                    allHealthy = rootNode.get("AllHealthy").asBoolean();
-                } catch (JsonProcessingException jpe){
-                    System.out.println("BotDataDefinition.java - JsonProcessingException");
-                } catch (IllegalArgumentException iae){
-                    System.out.println("BotDataDefinition.java - IllegalArgumentException");
-                }
-                //daca rsp.getScore() transform in obiect si daca "AllHealthy" != true
+                boolean allHealthy = Boolean.parseBoolean(rsp.getScore(localContentTest));
                 if(allHealthy) {
                     if (!timerUpdate) {
                         scores += "Healthy name: " + node.getNode_name() + " " + allHealthy + "\n";
