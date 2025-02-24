@@ -1,19 +1,9 @@
 package bot.telegram;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class TelegramBot extends TelegramLongPollingBot {
     private long chatId;

@@ -1,9 +1,6 @@
 package bot.telegram;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
-import java.util.Map;
 
 public class StorjData {
     private String score_api_url;
