@@ -43,7 +43,11 @@ public class BotDataDefinition {
                 }
             }
         }
-        return cnt+" "+scores;
+        if(cnt > 0) {
+            return scores;
+        } else {
+            return "";
+        }
     }
     public String interrogateNode(Boolean localContentTest, Boolean timerUpdate) {
         String scores = "";
@@ -64,6 +68,10 @@ public class BotDataDefinition {
                 }
             }
         }
-        return cnt+" "+scores;
+        if(cnt > 0) {
+            return scores;
+        } else {
+            return "";
+        }
     }
 }
