@@ -26,7 +26,7 @@ public class BotDataDefinition {
         String scores = "";
         Integer cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
-            scores += entry.getValue().getScore_api_url()+">";
+            scores += entry.getValue().getScore_api_url()+">\n";
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
                 String fortaScore = rsp.getScore(localContentTest);
@@ -48,7 +48,7 @@ public class BotDataDefinition {
         String scores = "";
         Integer cnt = 0;
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
-            scores += entry.getValue().getScore_api_url()+">";
+            scores += entry.getValue().getScore_api_url()+">\n";
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
                 boolean allHealthy = Boolean.parseBoolean(rsp.getScore(localContentTest));
