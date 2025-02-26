@@ -23,9 +23,10 @@ public class BotDataDefinition {
         return botInfo;
     }
     public String interrogateScanner(Boolean localContentTest, Boolean timerUpdate) {
-        String scores = "", scoresAPI_URL = "";
+        String scores = "", scoresAPI_URL = "", scoresTmp = "";
         Integer cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
+            scoresTmp = "";
             scoresAPI_URL = "API>"+entry.getValue().getScore_api_url()+">\n";
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
@@ -33,25 +34,26 @@ public class BotDataDefinition {
                 cnt++;
                 try{
                     if((Float.compare(Float.parseFloat(fortaScore), 0.8f) < 0)) {
-                        scores += cnt+" NOT Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
+                        scoresTmp += cnt+" NOT Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
                     } else if (!timerUpdate){
-                        scores += cnt+" Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
+                        scoresTmp += cnt+" Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("BotDataDefinition.java - NumberFormatException");
                 }
             }
             if(cnt > 0){
-                scores = scoresAPI_URL + scores;
+                scores += scoresAPI_URL + scoresTmp;
                 cnt = 0;
             }
         }
         return scores;
     }
     public String interrogateNode(Boolean localContentTest, Boolean timerUpdate) {
-        String scores = "", scoresAPI_URL = "";
+        String scores = "", scoresAPI_URL = "", scoresTmp = "";
         Integer cnt = 0;
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
+            scoresTmp = "";
             scoresAPI_URL = "API>"+entry.getValue().getScore_api_url()+">\n";
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
@@ -59,14 +61,14 @@ public class BotDataDefinition {
                 cnt++;
                 if(allHealthy) {
                     if (!timerUpdate) {
-                        scores += cnt+" Healthy name >" + node.getNode_address() +">"+node.getNode_name() + " " + allHealthy + "\n";
+                        scoresTmp += cnt+" Healthy name >" + node.getNode_address() +">"+node.getNode_name() + " " + allHealthy + "\n";
                     }
                 } else {
-                    scores += cnt+" NOT Healthy name >" + node.getNode_address()+">"+node.getNode_name() + " " + allHealthy + "\n";
+                    scoresTmp += cnt+" NOT Healthy name >" + node.getNode_address()+">"+node.getNode_name() + " " + allHealthy + "\n";
                 }
             }
             if(cnt > 0){
-                scores = scoresAPI_URL + scores;
+                scores += scoresAPI_URL + scoresTmp;
                 cnt = 0;
             }
         }
