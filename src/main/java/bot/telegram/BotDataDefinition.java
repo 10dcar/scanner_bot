@@ -27,7 +27,7 @@ public class BotDataDefinition {
         Integer cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
             cnt = 0;
-            scores += entry.getValue().getScore_api_url()+">\n";
+            //scores += "API>"+entry.getValue().getScore_api_url()+">\n";
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
                 String fortaScore = rsp.getScore(localContentTest);
@@ -43,18 +43,18 @@ public class BotDataDefinition {
                 }
             }
         }
-        if(cnt > 0) {
+        //if(scores) {
             return scores;
-        } else {
+        /*} else {
             return "";
-        }
+        }*/
     }
     public String interrogateNode(Boolean localContentTest, Boolean timerUpdate) {
         String scores = "";
         Integer cnt = 0;
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
             cnt = 0;
-            scores += entry.getValue().getScore_api_url()+">\n";
+            //scores += "API>"+entry.getValue().getScore_api_url()+">\n";
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
                 boolean allHealthy = Boolean.parseBoolean(rsp.getScore(localContentTest));
@@ -68,10 +68,7 @@ public class BotDataDefinition {
                 }
             }
         }
-        if(cnt > 0) {
-            return scores;
-        } else {
-            return "";
-        }
+        //if(cnt > 0) {
+        return scores;
     }
 }
