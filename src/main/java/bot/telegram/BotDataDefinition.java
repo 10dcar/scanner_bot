@@ -3,6 +3,7 @@ package bot.telegram;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class BotDataDefinition {
     @JsonProperty("botInfo")
@@ -42,10 +43,11 @@ public class BotDataDefinition {
                     System.out.println("BotDataDefinition.java - NumberFormatException");
                 }
             }
-            if(cnt > 0){
+            if(!Objects.equals(scoresTmp, "")) {
                 scores += scoresAPI_URL + scoresTmp;
-                cnt = 0;
             }
+
+            cnt = 0;
         }
         return scores;
     }
@@ -67,10 +69,11 @@ public class BotDataDefinition {
                     scoresTmp += cnt+" NOT Healthy name >" + node.getNode_address()+">"+node.getNode_name() + " " + allHealthy + "\n";
                 }
             }
-            if(cnt > 0){
+            if(!Objects.equals(scoresTmp, "")) {
                 scores += scoresAPI_URL + scoresTmp;
-                cnt = 0;
             }
+
+            cnt = 0;
         }
         return scores;
     }
