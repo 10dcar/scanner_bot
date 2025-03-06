@@ -5,6 +5,7 @@
   },
   "forta": {
     "1": {
+      "trigger_value": "0.8f",
       "score_api_url": "https://api.forta.network/stats/sla/scanner/",
       "forta_scanner_address": [
         {

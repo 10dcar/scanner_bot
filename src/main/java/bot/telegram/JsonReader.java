@@ -9,7 +9,7 @@ public class JsonReader {
     ObjectMapper objectMapper;
     BotDataDefinition objReaded;
 
-    public JsonReader(Boolean localContentTest) {
+    public JsonReader() {
         this.objectMapper = new ObjectMapper();
 
         try {

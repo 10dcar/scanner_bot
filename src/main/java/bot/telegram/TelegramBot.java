@@ -13,7 +13,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     public TelegramBot(Boolean localContentTest){
         this.localContentTest = localContentTest;
         // read all the interrogation data
-        this.jsonBots = new JsonReader(localContentTest);
+        this.jsonBots = new JsonReader();
     }
 
     @Override

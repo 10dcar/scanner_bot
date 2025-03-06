@@ -24,27 +24,31 @@ public class BotDataDefinition {
         return botInfo;
     }
     public String interrogateScanner(Boolean localContentTest, Boolean timerUpdate) {
-        String scores = "", scoresAPI_URL = "", scoresTmp = "";
+        String scores = "", scoresTmp = "";
         Integer cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
             scoresTmp = "";
-            scoresAPI_URL = "API>"+entry.getValue().getScore_api_url()+">\n";
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
                 String fortaScore = rsp.getScore(localContentTest);
+                String anh = "Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
                 cnt++;
-                try{
-                    if((Float.compare(Float.parseFloat(fortaScore), 0.8f) < 0)) {
-                        scoresTmp += cnt+" NOT Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
-                    } else if (!timerUpdate){
-                        scoresTmp += cnt+" Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
+                if (rsp.getStatusCode() == 200) {
+                    try {
+                        if ((Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) < 0)) {
+                            scoresTmp += cnt + " NOT " + anh;
+                        } else if (!timerUpdate) {
+                            scoresTmp += cnt + " " + anh;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("BotDataDefinition.java - NumberFormatException");
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("BotDataDefinition.java - NumberFormatException");
+                } else {
+                    scoresTmp += cnt + " NOT KNOWN " + anh;
                 }
             }
-            if(!Objects.equals(scoresTmp, "")) {
-                scores += scoresAPI_URL + scoresTmp;
+            if(!"".equals(scoresTmp)) {
+                scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
             }
 
             cnt = 0;
@@ -52,25 +56,29 @@ public class BotDataDefinition {
         return scores;
     }
     public String interrogateNode(Boolean localContentTest, Boolean timerUpdate) {
-        String scores = "", scoresAPI_URL = "", scoresTmp = "";
+        String scores = "", scoresTmp = "";
         Integer cnt = 0;
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
             scoresTmp = "";
-            scoresAPI_URL = "API>"+entry.getValue().getScore_api_url()+">\n";
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
                 boolean allHealthy = Boolean.parseBoolean(rsp.getScore(localContentTest));
+                String anh = "Healthy name >" + node.getNode_address() +">"+node.getNode_name() + " " + allHealthy + "\n";
                 cnt++;
-                if(allHealthy) {
-                    if (!timerUpdate) {
-                        scoresTmp += cnt+" Healthy name >" + node.getNode_address() +">"+node.getNode_name() + " " + allHealthy + "\n";
+                if (rsp.getStatusCode() == 200) {
+                    if (allHealthy) {
+                        if (!timerUpdate) {
+                            scoresTmp += cnt + " " + anh;
+                        }
+                    } else {
+                        scoresTmp += cnt + " NOT " + anh;
                     }
                 } else {
-                    scoresTmp += cnt+" NOT Healthy name >" + node.getNode_address()+">"+node.getNode_name() + " " + allHealthy + "\n";
+                    scoresTmp += cnt + " NOT KNOWN " + anh;
                 }
             }
-            if(!Objects.equals(scoresTmp, "")) {
-                scores += scoresAPI_URL + scoresTmp;
+            if(!"".equals(scoresTmp)) {
+                scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
             }
 
             cnt = 0;

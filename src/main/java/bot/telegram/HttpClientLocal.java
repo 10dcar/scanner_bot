@@ -51,7 +51,6 @@ public class HttpClientLocal {
                 .sslContext(this.HandleSSL())
                 .build();
 
-        System.out.println("Call address::::"+address);
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
@@ -75,12 +74,10 @@ public class HttpClientLocal {
             }
 
             if(response != null) {
-                System.out.println(" code::::: "+response.statusCode());
                 return new HttpClientResponse(response.statusCode(),
                         response.headers().allValues("content-type"),
                         response.body());
             }
-            System.out.println(" code::::: 400");
             return new HttpClientResponse(400, null, null);
         } catch (InterruptedException ex) {
             ex.printStackTrace();

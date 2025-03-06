@@ -61,12 +61,16 @@ public class HttpClientResponse {
                     nestedValue = rootNode.get("AllHealthy").toString();
                 }
             } catch (IOException e) {
-                System.out.println("Client Response IO Exception");
+                System.out.println("Parse Error "+e.getMessage());
             }
         } catch(Exception e){
-            System.out.println("Client Response Exception in JSON body");
+            System.out.println("Exception "+e.getMessage());
         }
 
         return nestedValue;
+    }
+
+    public Integer getStatusCode() {
+        return statusCode;
     }
 }
