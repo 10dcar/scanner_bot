@@ -1,11 +1,8 @@
 package bot.telegram;
 
-import java.util.Objects;
 import java.util.TimerTask;
 
-public class
-
-TimerUpdate extends TimerTask {
+public class TimerUpdate extends TimerTask {
     TelegramBot bot;
 
     public TimerUpdate(TelegramBot bot) {

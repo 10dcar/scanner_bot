@@ -3,7 +3,6 @@ package bot.telegram;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class BotDataDefinition {
     @JsonProperty("botInfo")
@@ -32,20 +31,13 @@ public class BotDataDefinition {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
                 String fortaScore = rsp.getScore(localContentTest);
                 String anh = "Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
-                cnt++;
-                if (rsp.getStatusCode() == 200) {
-                    try {
-                        if ((Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) < 0)) {
-                            scoresTmp += cnt + " NOT " + anh;
-                        } else if (!timerUpdate) {
-                            scoresTmp += cnt + " " + anh;
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("BotDataDefinition.java - NumberFormatException");
-                    }
-                } else {
-                    scoresTmp += cnt + " NOT KNOWN " + anh;
+                boolean allHealthy = false;
+                try {
+                    allHealthy = (Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) < 0);
+                } catch (NumberFormatException e) {
+                    System.out.println("BotDataDefinition.java - NumberFormatException");
                 }
+                scoresTmp = this.getScoreString(rsp, allHealthy, timerUpdate, ++cnt, anh);
             }
             if(!"".equals(scoresTmp)) {
                 scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
@@ -64,18 +56,7 @@ public class BotDataDefinition {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
                 boolean allHealthy = Boolean.parseBoolean(rsp.getScore(localContentTest));
                 String anh = "Healthy name >" + node.getNode_address() +">"+node.getNode_name() + " " + allHealthy + "\n";
-                cnt++;
-                if (rsp.getStatusCode() == 200) {
-                    if (allHealthy) {
-                        if (!timerUpdate) {
-                            scoresTmp += cnt + " " + anh;
-                        }
-                    } else {
-                        scoresTmp += cnt + " NOT " + anh;
-                    }
-                } else {
-                    scoresTmp += cnt + " NOT KNOWN " + anh;
-                }
+                scoresTmp = this.getScoreString(rsp, allHealthy, timerUpdate, ++cnt, anh);
             }
             if(!"".equals(scoresTmp)) {
                 scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
@@ -84,5 +65,21 @@ public class BotDataDefinition {
             cnt = 0;
         }
         return scores;
+    }
+
+    private String getScoreString(HttpClientResponse rsp, boolean allHealthy, Boolean timerUpdate, Integer cnt, String anh){
+        String scoresTmp = "";
+        if (rsp.getStatusCode() == 200) {
+            if (allHealthy) {
+                if (!timerUpdate) {
+                    scoresTmp += cnt + " " + anh;
+                }
+            } else {
+                scoresTmp += cnt + " NOT " + anh;
+            }
+        } else {
+            scoresTmp += cnt + " NOT KNOWN " + anh;
+        }
+        return scoresTmp;
     }
 }
