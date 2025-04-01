@@ -33,12 +33,8 @@ public class BotDataDefinition {
                 String anh = "Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
                 boolean allHealthy = false;
                 try {
-                    /*if (Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) < 0){
-                        allHealthy = false;
-                    } else {
-                        allHealthy = true;
-                    }*/
-                    allHealthy = (Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) < 0);
+                    allHealthy = (Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) < 0) ? false : true;
+                    //allHealthy = (Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) < 0);
                 } catch (NumberFormatException e) {
                     System.out.println("BotDataDefinition.java - NumberFormatException");
                 }
