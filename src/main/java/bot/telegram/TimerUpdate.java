@@ -11,7 +11,7 @@ public class TimerUpdate extends TimerTask {
 
     @Override
     public void run() {
-        Boolean timerUpdate = true;
+        boolean timerUpdate = true;
         try {
             String scores = this.bot.getScoreAll(timerUpdate);
 

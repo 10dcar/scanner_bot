@@ -20,7 +20,7 @@ public class HttpClientResponse {
         this.body = body;
     }
 
-    public String getScoreValue(Boolean localContentTest){
+    public String getScoreValue(boolean localContentTest){
         String content;
 
         if(localContentTest) {
@@ -38,7 +38,7 @@ public class HttpClientResponse {
         }
         return content;
     }
-    public String getScore(Boolean localContentTest){
+    public String getScore(boolean localContentTest){
         String nestedValue = "";
 
         try {

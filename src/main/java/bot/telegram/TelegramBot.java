@@ -7,10 +7,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class TelegramBot extends TelegramLongPollingBot {
     private long chatId;
-    private Boolean localContentTest;
+    private boolean localContentTest;
     private JsonReader jsonBots;
 
-    public TelegramBot(Boolean localContentTest){
+    public TelegramBot(boolean localContentTest){
         this.localContentTest = localContentTest;
         // read all the interrogation data
         this.jsonBots = new JsonReader();
@@ -30,7 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        Boolean timerUpdate = false;
+        boolean timerUpdate = false;
         String score = this.getScoreAll(timerUpdate);
         this.chatId = update.getMessage().getChatId();
 
@@ -40,7 +40,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.send(score);
     }
 
-    public String getScoreAll(Boolean timerUpdate){
+    public String getScoreAll(boolean timerUpdate){
         String scoreForta = this.jsonBots.getObjReaded().interrogateScanner(this.localContentTest, timerUpdate);
         String scoreStorj = this.jsonBots.getObjReaded().interrogateNode(this.localContentTest, timerUpdate);
 

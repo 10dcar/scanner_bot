@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public class Main {
     public static void main(String[] args) throws Exception {
         // Take the content from local file for test or online localContent = true/false
-        Boolean localContentTest = false;
+        boolean localContentTest = false;
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         TelegramBot bot = new TelegramBot(localContentTest);
 

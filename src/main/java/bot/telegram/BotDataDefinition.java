@@ -22,7 +22,7 @@ public class BotDataDefinition {
         System.out.println("Bot>>>> {"+this.botInfo.getTelegramBotName() + " " + this.botInfo.getTelegramBotToken()+"}");
         return botInfo;
     }
-    public String interrogateScanner(Boolean localContentTest, Boolean timerUpdate) {
+    public String interrogateScanner(boolean localContentTest, boolean timerUpdate) {
         String scores = "", scoresTmp = "";
         Integer cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
@@ -47,7 +47,7 @@ public class BotDataDefinition {
         }
         return scores;
     }
-    public String interrogateNode(Boolean localContentTest, Boolean timerUpdate) {
+    public String interrogateNode(boolean localContentTest, boolean timerUpdate) {
         String scores = "", scoresTmp = "";
         Integer cnt = 0;
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
@@ -67,7 +67,7 @@ public class BotDataDefinition {
         return scores;
     }
 
-    private String getScoreString(HttpClientResponse rsp, boolean allHealthy, Boolean timerUpdate, Integer cnt, String anh){
+    private String getScoreString(HttpClientResponse rsp, boolean allHealthy, boolean timerUpdate, Integer cnt, String anh){
         String scoresTmp = "";
         if (rsp.getStatusCode() == 200) {
             if (allHealthy) {
