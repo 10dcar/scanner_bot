@@ -37,7 +37,7 @@ public class BotDataDefinition {
                 } catch (NumberFormatException e) {
                     System.out.println("BotDataDefinition.java - NumberFormatException");
                 }
-                scoresTmp = this.getScoreString(rsp, allHealthy, timerUpdate, ++cnt, anh);
+                scoresTmp = this.getScoreString(scoresTmp, rsp, allHealthy, timerUpdate, ++cnt, anh);
             }
             if(!"".equals(scoresTmp)) {
                 scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
@@ -56,7 +56,7 @@ public class BotDataDefinition {
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
                 boolean allHealthy = Boolean.parseBoolean(rsp.getScore(localContentTest));
                 String anh = "Healthy name >" + node.getNode_address() +">"+node.getNode_name() + " " + allHealthy + "\n";
-                scoresTmp = this.getScoreString(rsp, allHealthy, timerUpdate, ++cnt, anh);
+                scoresTmp = this.getScoreString(scoresTmp, rsp, allHealthy, timerUpdate, ++cnt, anh);
             }
             if(!"".equals(scoresTmp)) {
                 scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
@@ -67,8 +67,7 @@ public class BotDataDefinition {
         return scores;
     }
 
-    private String getScoreString(HttpClientResponse rsp, boolean allHealthy, boolean timerUpdate, Integer cnt, String anh){
-        String scoresTmp = "";
+    private String getScoreString(String scoresTmp, HttpClientResponse rsp, boolean allHealthy, boolean timerUpdate, Integer cnt, String anh){
         if (rsp.getStatusCode() == 200) {
             if (allHealthy) {
                 if (!timerUpdate) {
