@@ -19,5 +19,12 @@ public class Main {
         Timer timer = new Timer();
         TimerTask task = new TimerUpdate(bot);
         timer.schedule(task, 10000, 1000*60*5);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Shutdown Hook Running...");
+            // Perform cleanup tasks here (e.g., closing files, releasing resources).
+
+            // Nothing to cleanup (checked: HttpClient, HttpRequest, SSLContext, X509TrustManager, Files, File)
+        }));
     }
 }
