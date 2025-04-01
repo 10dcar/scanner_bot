@@ -10,11 +10,11 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class HttpClientResponse {
-    Integer statusCode;
+    int statusCode;
     List<String> headers;
     String body;
 
-    public HttpClientResponse(Integer statusCode, List<String> headers, String body) {
+    public HttpClientResponse(int statusCode, List<String> headers, String body) {
         this.statusCode = statusCode;
         this.headers = headers;
         this.body = body;

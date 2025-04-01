@@ -24,7 +24,7 @@ public class BotDataDefinition {
     }
     public String interrogateScanner(boolean localContentTest, boolean timerUpdate) {
         String scores = "", scoresTmp = "";
-        Integer cnt = 0;
+        int cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
             scoresTmp = "";
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
@@ -50,7 +50,7 @@ public class BotDataDefinition {
     }
     public String interrogateNode(boolean localContentTest, boolean timerUpdate) {
         String scores = "", scoresTmp = "";
-        Integer cnt = 0;
+        int cnt = 0;
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
             scoresTmp = "";
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
@@ -68,7 +68,7 @@ public class BotDataDefinition {
         return scores;
     }
 
-    private String getScoreString(String scoresTmp, HttpClientResponse rsp, boolean allHealthy, boolean timerUpdate, Integer cnt, String anh){
+    private String getScoreString(String scoresTmp, HttpClientResponse rsp, boolean allHealthy, boolean timerUpdate, int cnt, String anh){
         if (rsp.getStatusCode() == 200) {
             if (allHealthy) {
                 if (!timerUpdate) {
