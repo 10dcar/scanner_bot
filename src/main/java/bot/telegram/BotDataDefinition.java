@@ -35,7 +35,7 @@ public class BotDataDefinition {
                 try {
                     allHealthy = (Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) > 0);
                 } catch (NumberFormatException e) {
-                    System.out.println("BotDataDefinition.java - NumberFormatException");
+                    System.out.println("BotDataDefinition.java - NumberFormatException " + fortaScore + " " +entry.getValue().getTrigger_value());
                 }
                 scoresTmp = this.getScoreString(scoresTmp, rsp, allHealthy, timerUpdate, ++cnt, anh);
             }
