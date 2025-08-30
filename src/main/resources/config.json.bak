@@ -5,16 +5,23 @@
   },
   "forta": {
     "1": {
-      "trigger_value": "0.8f",
       "score_api_url": "https://api.forta.network/stats/sla/scanner/",
       "forta_scanner_address": [
         {
           "scanner_address": "0x2b1c74aaed16b60833aa1d2e0776b8be53bbb6d8",
-          "scanner_name": "tr_optimism2095_1"
+          "scanner_name": "optimism2095"
         },
         {
-          "scanner_address": "0xb2547488030c80e117543e7133919d29737e3916",
-          "scanner_name": "tr_optimism2095_2"
+          "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b256",
+          "scanner_name": "eth1"
+        },
+        {
+          "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b257",
+          "scanner_name": "eth2"
+        },
+        {
+          "scanner_address": "0xfbf6a4c704105f8f605945e6488dda5e46f2b255",
+          "scanner_name": "polygon1"
         }
       ]
     }

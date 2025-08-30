@@ -1,26 +1,16 @@
 package bot.telegram;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class TelegramBot extends TelegramLongPollingBot {
     private long chatId;
-    private Boolean localContentTest;
+    private boolean localContentTest;
     private JsonReader jsonBots;
 
-    public TelegramBot(Boolean localContentTest){
+    public TelegramBot(boolean localContentTest){
         this.localContentTest = localContentTest;
         // read all the interrogation data
         this.jsonBots = new JsonReader();
@@ -29,20 +19,19 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         String botName = this.jsonBots.getObjReaded().botInfo().getTelegramBotName();
-        System.out.println("Bot name::"+botName);
         return botName;
     }
 
     @Override
     public String getBotToken() {
         String botToken = this.jsonBots.getObjReaded().botInfo().getTelegramBotToken();
-        System.out.println("Bot token::"+botToken);
         return botToken;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
-        String score = this.getScoreAll();
+        boolean timerUpdate = false;
+        String score = this.getScoreAll(timerUpdate);
         this.chatId = update.getMessage().getChatId();
 
         System.out.println("UpdateReceived::::::" + update.getMessage().getText());
@@ -51,11 +40,11 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.send(score);
     }
 
-    public String getScoreAll(){
-        String scoreForta = this.jsonBots.getObjReaded().interrogateScanner();
-        String scoreStorj = this.jsonBots.getObjReaded().interrogateNode();
+    public String getScoreAll(boolean timerUpdate){
+        String scoreForta = this.jsonBots.getObjReaded().interrogateScanner(this.localContentTest, timerUpdate);
+        String scoreStorj = this.jsonBots.getObjReaded().interrogateNode(this.localContentTest, timerUpdate);
 
-        return scoreForta+" "+scoreStorj;
+        return scoreForta+""+scoreStorj;
     }
 
     public void send(String messageText){

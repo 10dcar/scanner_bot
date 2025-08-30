@@ -1,7 +1,6 @@
 package bot.telegram;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.URI;
 import java.net.http.*;
 import java.security.KeyManagementException;
@@ -50,9 +49,9 @@ public class HttpClientLocal {
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(10))
                 .sslContext(this.HandleSSL())
-                .build();;
+                .build();
+
         try {
-            System.out.println("Call address::::"+address);
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create(address))
@@ -74,15 +73,11 @@ public class HttpClientLocal {
                 System.out.println("HttpClientLocal.java - IOException");
             }
 
-            System.out.print("scannerAddress::::: "+address);
-
             if(response != null) {
-                System.out.println(" code::::: "+response.statusCode());
                 return new HttpClientResponse(response.statusCode(),
                         response.headers().allValues("content-type"),
                         response.body());
             }
-            System.out.println(" code::::: 400");
             return new HttpClientResponse(400, null, null);
         } catch (InterruptedException ex) {
             ex.printStackTrace();

@@ -1,6 +1,7 @@
 package bot.telegram;
 
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,17 +10,17 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class HttpClientResponse {
-    Integer statusCode;
+    int statusCode;
     List<String> headers;
     String body;
 
-    public HttpClientResponse(Integer statusCode, List<String> headers, String body) {
+    public HttpClientResponse(int statusCode, List<String> headers, String body) {
         this.statusCode = statusCode;
         this.headers = headers;
         this.body = body;
     }
 
-    public String getScoreValue(Boolean localContentTest){
+    public String getScoreValue(boolean localContentTest){
         String content;
 
         if(localContentTest) {
@@ -37,23 +38,39 @@ public class HttpClientResponse {
         }
         return content;
     }
-    public String getScore(Boolean localContentTest){
-        //looking to get score and value
-        String scJsParent = "statistics";
-        String scJsChild = "avg";
+    public String getScore(boolean localContentTest){
         String nestedValue = "";
 
         try {
-            JSONObject jsonObject = new JSONObject(this.getScoreValue(localContentTest));
+            String jsonString = this.getScoreValue(localContentTest);
+            ObjectMapper objectMapper = new ObjectMapper();
 
-            JSONObject nestedJsonObject = jsonObject.getJSONObject(scJsParent);
-            if (nestedJsonObject != null) {
-                nestedValue = String.valueOf(nestedJsonObject.getNumber(scJsChild));
+            try {
+                // Parse JSON string
+                JsonNode rootNode = objectMapper.readTree(jsonString);
+
+                if (rootNode.has("statistics")) {
+                    // Navigate to statistics object
+                    JsonNode statisticsNode = rootNode.path("statistics");
+
+                    if (statisticsNode.has("avg")) {
+                        // Get avg value
+                        nestedValue = statisticsNode.path("avg").toString();
+                    }
+                } else if (rootNode.has("AllHealthy")) {
+                    nestedValue = rootNode.get("AllHealthy").toString();
+                }
+            } catch (IOException e) {
+                System.out.println("Parse Error "+e.getMessage());
             }
         } catch(Exception e){
-            nestedValue = this.body;
+            System.out.println("Exception "+e.getMessage());
         }
 
         return nestedValue;
+    }
+
+    public Integer getStatusCode() {
+        return statusCode;
     }
 }

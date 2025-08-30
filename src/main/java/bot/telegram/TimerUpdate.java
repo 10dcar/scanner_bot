@@ -2,9 +2,7 @@ package bot.telegram;
 
 import java.util.TimerTask;
 
-public class
-
-TimerUpdate extends TimerTask {
+public class TimerUpdate extends TimerTask {
     TelegramBot bot;
 
     public TimerUpdate(TelegramBot bot) {
@@ -13,15 +11,14 @@ TimerUpdate extends TimerTask {
 
     @Override
     public void run() {
+        boolean timerUpdate = true;
         try {
-            String fortaScore = this.bot.getScoreAll();
+            String scores = this.bot.getScoreAll(timerUpdate);
 
-            System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");//: "+fortaScore + "
-            try{
-                if((Float.compare(Float.parseFloat(fortaScore), 0.8f) < 0)) {
-                    this.bot.send(fortaScore);
-                }
-            } catch (NumberFormatException e) { }
+            //System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");
+            if(!"".equals(scores)) {
+                this.bot.send(scores);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

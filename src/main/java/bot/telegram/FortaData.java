@@ -1,11 +1,9 @@
 package bot.telegram;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
-import java.util.Map;
 
 public class FortaData {
+    private Float trigger_value;
     private String score_api_url;
     private List<FortaData.ScannerAddress> forta_scanner_address;
 
@@ -24,6 +22,10 @@ public class FortaData {
 
     public String getScore_api_url() {
         return score_api_url;
+    }
+
+    public Float getTrigger_value() {
+        return trigger_value;
     }
 
     public List<ScannerAddress> getForta_scanner_address() {

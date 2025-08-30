@@ -1,7 +1,7 @@
 package bot.telegram;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Map;
 
 public class BotDataDefinition {
@@ -22,30 +22,63 @@ public class BotDataDefinition {
         System.out.println("Bot>>>> {"+this.botInfo.getTelegramBotName() + " " + this.botInfo.getTelegramBotToken()+"}");
         return botInfo;
     }
-    public String interrogateScanner() {
-        String scores = null;
+    public String interrogateScanner(boolean localContentTest, boolean timerUpdate) {
+        String scores = "", scoresTmp = "";
+        int cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
-            System.out.println("Field " + entry.getKey() + ":");
-            System.out.println("  Score API URL: " + entry.getValue().getScore_api_url());
+            scoresTmp = "";
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
-                System.out.println("  Node Address: " + node.getScanner_address() + ", Node Name: " + node.getScanner_name());
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
-                scores += "Name: " + this.botInfo.getTelegramBotName() + " " + rsp.getScore(false) + "\n";
+                String fortaScore = rsp.getScore(localContentTest);
+                String anh = "Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";
+                boolean allHealthy = false;
+                try {
+                    allHealthy = (Float.compare(Float.parseFloat(fortaScore), entry.getValue().getTrigger_value()) > 0);
+                } catch (NumberFormatException e) {
+                    System.out.println("BotDataDefinition.java - NumberFormatException " + fortaScore + " " +entry.getValue().getTrigger_value());
+                }
+                scoresTmp = this.getScoreString(scoresTmp, rsp, allHealthy, timerUpdate, ++cnt, anh);
             }
+            if(!"".equals(scoresTmp)) {
+                scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
+            }
+
+            cnt = 0;
         }
         return scores;
     }
-    public String interrogateNode() {
-        String scores = null;
+    public String interrogateNode(boolean localContentTest, boolean timerUpdate) {
+        String scores = "", scoresTmp = "";
+        int cnt = 0;
         for (Map.Entry<String, StorjData> entry : this.storj.entrySet()) {
-            System.out.println("Field " + entry.getKey() + ":");
-            System.out.println("  Score API URL: " + entry.getValue().getScore_api_url());
+            scoresTmp = "";
             for (StorjData.NodeAddress node : entry.getValue().getStorj_node_address()) {
-                System.out.println("  Node Address: " + node.getNode_address() + ", Node Name: " + node.getNode_name());
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.storjSeparator+node.getNode_address());
-                scores += "Name: " + this.botInfo.getTelegramBotName() + " " + rsp.getScore(false) + "\n";
+                boolean allHealthy = Boolean.parseBoolean(rsp.getScore(localContentTest));
+                String anh = "Healthy name >" + node.getNode_address() +">"+node.getNode_name() + " " + allHealthy + "\n";
+                scoresTmp = this.getScoreString(scoresTmp, rsp, allHealthy, timerUpdate, ++cnt, anh);
             }
+            if(!"".equals(scoresTmp)) {
+                scores += "API>"+entry.getValue().getScore_api_url()+">\n" + scoresTmp;
+            }
+
+            cnt = 0;
         }
         return scores;
+    }
+
+    private String getScoreString(String scoresTmp, HttpClientResponse rsp, boolean allHealthy, boolean timerUpdate, int cnt, String anh){
+        if (rsp.getStatusCode() == 200) {
+            if (allHealthy) {
+                if (!timerUpdate) {
+                    scoresTmp += cnt + " " + anh;
+                }
+            } else {
+                scoresTmp += cnt + " NOT " + anh;
+            }
+        } else {
+            scoresTmp += cnt + " NOT KNOWN " + anh;
+        }
+        return scoresTmp;
     }
 }
