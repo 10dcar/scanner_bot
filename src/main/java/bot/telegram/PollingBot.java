@@ -69,7 +69,7 @@ public class PollingBot {
                 }
 
                 // advance offset so Telegram won't resend processed updates
-                if (maxSeen > 0) offset = maxSeen + 1; else offset = offset + 1;
+                if (maxSeen > 0) offset = maxSeen + 1;
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
