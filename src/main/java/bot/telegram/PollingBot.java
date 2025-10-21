@@ -23,7 +23,7 @@ public class PollingBot {
             "\"update_id\"\\s*:\\s*(\\d+).*?\"chat\"\\s*:\\s*\\{[^}]*\"id\"\\s*:\\s*(-?\\d+)[^}]*\\}.*?(?:\"text\"\\s*:\\s*\"(.*?)\")?",
             Pattern.DOTALL);
 
-    public static void poll() throws IOException, InterruptedException {
+    public void poll() throws IOException, InterruptedException {
         long offset = 0;
         String botToken = telegramBot.getBotToken();
 
@@ -31,7 +31,7 @@ public class PollingBot {
 
         while (true) {
             try {
-                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=[\"message\"]"
+                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=true"
                         + (offset > 0 ? "&offset=" + offset : "");
                 System.out.println("PollingBot: "+getUpdatesUrl);
                 HttpRequest req = HttpRequest.newBuilder()

@@ -11,6 +11,7 @@ public class Main {
 
         TelegramBot bot = new TelegramBot(localContentTest);
         PollingBot pollingBot = new PollingBot(bot);
+        pollingBot.poll();
 
         // Periodic updates
         Timer timer = new Timer();
