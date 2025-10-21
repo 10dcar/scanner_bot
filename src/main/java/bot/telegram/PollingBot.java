@@ -32,8 +32,7 @@ public class PollingBot {
         while (true) {
             System.out.println("Starting polling next...");
             try {
-
-                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=true"
+                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=false"
                         + (offset > 0 ? "&offset=" + offset : "");
                 HttpRequest req = HttpRequest.newBuilder()
                         .uri(URI.create(getUpdatesUrl))
