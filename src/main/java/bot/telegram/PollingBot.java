@@ -30,12 +30,10 @@ public class PollingBot {
         System.out.println("Starting polling...");
 
         while (true) {
-            System.out.println("Starting polling next...");
             try {
-                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=true"
+                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=false"
                         + (offset > 0 ? "&offset=" + offset : "");
-
-                System.out.println("Starting polling url..." + getUpdatesUrl);
+                System.out.println("PollingBot: "+getUpdatesUrl);
                 HttpRequest req = HttpRequest.newBuilder()
                         .uri(URI.create(getUpdatesUrl))
                         .timeout(Duration.ofSeconds(40))
@@ -50,20 +48,18 @@ public class PollingBot {
 
                 Matcher m = UPDATE_PATTERN.matcher(body);
                 long maxSeen = offset;
-                System.out.println("Starting polling body..." + body);
                 while (m.find()) {
-                    System.out.println("Starting polling find...");
                     long updateId = Long.parseLong(m.group(1));
                     long chatId = Long.parseLong(m.group(2));
                     String text = m.groupCount() >= 3 ? m.group(3) : null;
                     if (text == null) text = "";
 
-                    //System.out.println("Got update_id=" + updateId + " chatId=" + chatId + " text=" + text);
+                    System.out.println("Got update_id=" + updateId + " chatId=" + chatId + " text=" + text);
 
                     // Example reply: echo incoming text
-                    String reply = " " + telegramBot.onUpdateReceived(chatId, text);
+                    String reply = "Echo: " + telegramBot.onUpdateReceived(chatId, text);
                     boolean sent = sendMessage(botToken, chatId, reply);
-                    //System.out.println("sendMessage sent=" + sent);
+                    System.out.println("sendMessage sent=" + sent);
 
                     if (updateId >= maxSeen) maxSeen = updateId;
                 }
@@ -83,7 +79,7 @@ public class PollingBot {
     public static boolean sendMessage(String botToken, long chatId, String text) throws IOException, InterruptedException {
         String url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
         String json = "{\"chat_id\":" + chatId + ",\"text\":\"" + escapeJson(text) + "\"}";
-        System.out.println("Sending message to chat_id=" + chatId + ": " + text);
+
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .timeout(Duration.ofSeconds(10))
