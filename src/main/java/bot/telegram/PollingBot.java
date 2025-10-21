@@ -53,12 +53,12 @@ public class PollingBot {
                     String text = m.groupCount() >= 3 ? m.group(3) : null;
                     if (text == null) text = "";
 
-                    System.out.println("Got update_id=" + updateId + " chatId=" + chatId + " text=" + text);
+                    //System.out.println("Got update_id=" + updateId + " chatId=" + chatId + " text=" + text);
 
                     // Example reply: echo incoming text
-                    String reply = "Echo: " + telegramBot.onUpdateReceived(chatId, text);
+                    String reply = " " + telegramBot.onUpdateReceived(chatId, text);
                     boolean sent = sendMessage(botToken, chatId, reply);
-                    System.out.println("sendMessage sent=" + sent);
+                    //System.out.println("sendMessage sent=" + sent);
 
                     if (updateId >= maxSeen) maxSeen = updateId;
                 }
@@ -78,7 +78,7 @@ public class PollingBot {
     public static boolean sendMessage(String botToken, long chatId, String text) throws IOException, InterruptedException {
         String url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
         String json = "{\"chat_id\":" + chatId + ",\"text\":\"" + escapeJson(text) + "\"}";
-
+        System.out.println("Sending message to chat_id=" + chatId + ": " + text);
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .timeout(Duration.ofSeconds(10))
