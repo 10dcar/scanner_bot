@@ -31,7 +31,7 @@ public class PollingBot {
 
         while (true) {
             try {
-                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=false"
+                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=true"
                         + (offset > 0 ? "&offset=" + offset : "");
                 System.out.println("PollingBot: "+getUpdatesUrl);
                 HttpRequest req = HttpRequest.newBuilder()
@@ -70,9 +70,10 @@ public class PollingBot {
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException ignored) { }
             }
+            Thread.sleep(1000);
         }
     }
 
