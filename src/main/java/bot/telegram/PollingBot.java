@@ -43,12 +43,15 @@ public class PollingBot {
                 HttpResponse<String> resp = CLIENT.send(req, HttpResponse.BodyHandlers.ofString());
                 String body = resp.body();
                 if (body == null || body.isBlank()) {
+                    System.out.println("Starting polling blank...");
                     continue;
                 }
 
                 Matcher m = UPDATE_PATTERN.matcher(body);
                 long maxSeen = offset;
+                System.out.println("Starting polling body..." + body);
                 while (m.find()) {
+                    System.out.println("Starting polling find...");
                     long updateId = Long.parseLong(m.group(1));
                     long chatId = Long.parseLong(m.group(2));
                     String text = m.groupCount() >= 3 ? m.group(3) : null;
