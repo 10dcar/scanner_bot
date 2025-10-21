@@ -23,11 +23,13 @@ public class BotDataDefinition {
         return botInfo;
     }
     public String interrogateScanner(boolean localContentTest, boolean timerUpdate) {
+        //System.out.println("Interrogate Forta scanners...interrogateScanner ");
         String scores = "", scoresTmp = "";
         int cnt = 0;
         for (Map.Entry<String, FortaData> entry : this.forta.entrySet()) {
             scoresTmp = "";
             for (FortaData.ScannerAddress node : entry.getValue().getForta_scanner_address()) {
+                //System.out.println("Interrogate Forta scanners...interrogateScanner "+entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
                 HttpClientResponse rsp = this.hcl.interrogate(entry.getValue().getScore_api_url()+this.fortaSeparator+node.getScanner_address());
                 String fortaScore = rsp.getScore(localContentTest);
                 String anh = "Healthy name >" + node.getScanner_address() +">"+node.getScanner_name() + " " + fortaScore + "\n";

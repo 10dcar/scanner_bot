@@ -1,11 +1,8 @@
 package bot.telegram;
 
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class TelegramBot extends TelegramLongPollingBot {
+
+public class TelegramBot {
     private long chatId;
     private boolean localContentTest;
     private JsonReader jsonBots;
@@ -16,28 +13,30 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.jsonBots = new JsonReader();
     }
 
-    @Override
     public String getBotUsername() {
         String botName = this.jsonBots.getObjReaded().botInfo().getTelegramBotName();
         return botName;
     }
 
-    @Override
     public String getBotToken() {
         String botToken = this.jsonBots.getObjReaded().botInfo().getTelegramBotToken();
+        System.out.println("Bot token::::::" + botToken);
         return botToken;
     }
 
-    @Override
-    public void onUpdateReceived(Update update) {
+    public long getChatId() {
+        return this.chatId;
+    }
+
+    public String onUpdateReceived(long chatId, String text) {
         boolean timerUpdate = false;
         String score = this.getScoreAll(timerUpdate);
-        this.chatId = update.getMessage().getChatId();
+        this.chatId = chatId;
 
-        System.out.println("UpdateReceived::::::" + update.getMessage().getText());
+        System.out.println("UpdateReceived::::::" + text);
 
         System.out.println(score);
-        this.send(score);
+        return score;
     }
 
     public String getScoreAll(boolean timerUpdate){
@@ -45,18 +44,5 @@ public class TelegramBot extends TelegramLongPollingBot {
         String scoreStorj = this.jsonBots.getObjReaded().interrogateNode(this.localContentTest, timerUpdate);
 
         return scoreForta+""+scoreStorj;
-    }
-
-    public void send(String messageText){
-        if(this.chatId > 0) {
-            SendMessage message = SendMessage.builder()
-                    .chatId(this.chatId + "")
-                    .text(messageText).build();
-            try {
-                execute(message);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

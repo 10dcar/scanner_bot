@@ -4,9 +4,11 @@ import java.util.TimerTask;
 
 public class TimerUpdate extends TimerTask {
     TelegramBot bot;
+    PollingBot pollingBot;
 
-    public TimerUpdate(TelegramBot bot) {
+    public TimerUpdate(TelegramBot bot, PollingBot pollingBot) {
         this.bot = bot;
+        this.pollingBot = pollingBot;
     }
 
     @Override
@@ -17,7 +19,7 @@ public class TimerUpdate extends TimerTask {
 
             //System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");
             if(!"".equals(scores)) {
-                this.bot.send(scores);
+                this.pollingBot.sendMessage(bot.getBotToken(), bot.getChatId(), scores);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
