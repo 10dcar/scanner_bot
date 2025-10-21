@@ -32,8 +32,10 @@ public class PollingBot {
         while (true) {
             System.out.println("Starting polling next...");
             try {
-                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=true"
+                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=10&allowed_updates=true"
                         + (offset > 0 ? "&offset=" + offset : "");
+
+                System.out.println("Starting polling url..." + getUpdatesUrl);
                 HttpRequest req = HttpRequest.newBuilder()
                         .uri(URI.create(getUpdatesUrl))
                         .timeout(Duration.ofSeconds(40))
@@ -43,7 +45,6 @@ public class PollingBot {
                 HttpResponse<String> resp = CLIENT.send(req, HttpResponse.BodyHandlers.ofString());
                 String body = resp.body();
                 if (body == null || body.isBlank()) {
-                    System.out.println("Starting polling blank...");
                     continue;
                 }
 
@@ -68,7 +69,7 @@ public class PollingBot {
                 }
 
                 // advance offset so Telegram won't resend processed updates
-                if (maxSeen > 0) offset = maxSeen + 1;
+                if (maxSeen > 0) offset = maxSeen + 1; else offset = offset + 1;
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
