@@ -52,7 +52,6 @@ public class HttpClientLocal {
                 .build();
 
         try {
-            System.out.println("HttpClientLocal Interrogate address: " + address);
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
                     .uri(URI.create(address))
