@@ -15,12 +15,13 @@ public class PollingBot {
             .connectTimeout(Duration.ofSeconds(10))
             .build();
 
-    PollingBot (TelegramBot telegramBot) {
+    PollingBot(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
     }
-    // regex to extract update_id, chat id and text (simple and tolerant)
+
+    // regex to extract update_id, chat id and text; uses lookahead to stop at next update boundary
     private static final Pattern UPDATE_PATTERN = Pattern.compile(
-            "\"update_id\"\\s*:\\s*(\\d+).*?\"chat\"\\s*:\\s*\\{[^}]*\"id\"\\s*:\\s*(-?\\d+)[^}]*\\}.*?(?:\"text\"\\s*:\\s*\"(.*?)\")?",
+            "\"update_id\"\\s*:\\s*(\\d+).*?\"chat\"\\s*:\\s*\\{[^}]*\"id\"\\s*:\\s*(-?\\d+)[^}]*\\}.*?(?:\"text\"\\s*:\\s*\"(.*?)\")?(?=(?:\\s*,\\s*\"update_id\"|\\s*\\]|$))",
             Pattern.DOTALL);
 
     public void poll() throws IOException, InterruptedException {
@@ -31,9 +32,9 @@ public class PollingBot {
 
         while (true) {
             try {
-                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30&allowed_updates=true"
+                String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30"
                         + (offset > 0 ? "&offset=" + offset : "");
-                System.out.println("PollingBot: "+getUpdatesUrl);
+                System.out.println("PollingBot: " + getUpdatesUrl);
                 HttpRequest req = HttpRequest.newBuilder()
                         .uri(URI.create(getUpdatesUrl))
                         .timeout(Duration.ofSeconds(40))
@@ -43,29 +44,29 @@ public class PollingBot {
                 HttpResponse<String> resp = CLIENT.send(req, HttpResponse.BodyHandlers.ofString());
                 String body = resp.body();
                 if (body == null || body.isBlank()) {
+                    // nothing returned
                     continue;
                 }
 
                 Matcher m = UPDATE_PATTERN.matcher(body);
-                long maxSeen = offset;
+                long maxSeen = -1;
                 while (m.find()) {
                     long updateId = Long.parseLong(m.group(1));
                     long chatId = Long.parseLong(m.group(2));
-                    String text = m.groupCount() >= 3 ? m.group(3) : null;
-                    if (text == null) text = "";
+                    String text = m.group(3) != null ? unescapeJson(m.group(3)) : "";
 
                     System.out.println("Got update_id=" + updateId + " chatId=" + chatId + " text=" + text);
 
                     // Example reply: echo incoming text
-                    String reply = "Echo: " + telegramBot.onUpdateReceived(chatId, text);
+                    String reply = "" + telegramBot.onUpdateReceived(chatId, text);
                     boolean sent = sendMessage(botToken, chatId, reply);
                     System.out.println("sendMessage sent=" + sent);
 
-                    if (updateId >= maxSeen) maxSeen = updateId;
+                    if (updateId > maxSeen) maxSeen = updateId;
                 }
 
-                // advance offset so Telegram won't resend processed updates
-                if (maxSeen > 0) offset = maxSeen + 1;
+                // advance offset only if we processed at least one update
+                if (maxSeen >= 0) offset = maxSeen + 1;
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -95,5 +96,16 @@ public class PollingBot {
     private static String escapeJson(String s) {
         if (s == null) return "";
         return s.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "");
+    }
+
+    private static String unescapeJson(String s) {
+        if (s == null) return "";
+        // Basic unescape for common sequences returned in JSON strings
+        String res = s.replace("\\\\", "\\")
+                .replace("\\\"", "\"")
+                .replace("\\n", "\n")
+                .replace("\\r", "\r")
+                .replace("\\t", "\t");
+        return res;
     }
 }
