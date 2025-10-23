@@ -17,8 +17,9 @@ public class TimerUpdate extends TimerTask {
         try {
             String scores = this.bot.getScoreAll(timerUpdate);
 
-            System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");
             if(!"".equals(scores)) {
+                System.out.println("!!!!!Timed update (" + java.time.LocalDateTime.now() + ")");
+
                 this.pollingBot.sendMessage(bot.getBotToken(), bot.getChatId(), scores);
             }
         } catch (Exception e) {

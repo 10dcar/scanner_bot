@@ -35,7 +35,7 @@ public class TelegramBot {
 
         System.out.println("UpdateReceived::::::" + text);
 
-        System.out.println(score);
+        //System.out.println(score);
         return score;
     }
 
