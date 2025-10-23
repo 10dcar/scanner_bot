@@ -34,7 +34,7 @@ public class PollingBot {
             try {
                 String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30"
                         + (offset > 0 ? "&offset=" + offset : "");
-                System.out.println("PollingBot: " + getUpdatesUrl);
+                //System.out.println("PollingBot: " + getUpdatesUrl);
                 HttpRequest req = HttpRequest.newBuilder()
                         .uri(URI.create(getUpdatesUrl))
                         .timeout(Duration.ofSeconds(40))
@@ -60,7 +60,6 @@ public class PollingBot {
                     // Example reply: echo incoming text
                     String reply = "" + telegramBot.onUpdateReceived(chatId, text);
                     boolean sent = sendMessage(botToken, chatId, reply);
-                    System.out.println("sendMessage sent=" + sent);
 
                     if (updateId > maxSeen) maxSeen = updateId;
                 }
@@ -89,6 +88,7 @@ public class PollingBot {
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
+        System.out.println("sendMessage sent=" + text);
         HttpResponse<String> resp = CLIENT.send(req, HttpResponse.BodyHandlers.ofString());
         return resp.statusCode() == 200 && resp.body().contains("\"ok\":true");
     }
