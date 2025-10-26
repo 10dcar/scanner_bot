@@ -30,7 +30,7 @@ public class PollingBot {
 
         System.out.println("Starting polling...");
 
-        while (run) {
+        while (true) {
             try {
                 String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30"
                         + (offset > 0 ? "&offset=" + offset : "");
