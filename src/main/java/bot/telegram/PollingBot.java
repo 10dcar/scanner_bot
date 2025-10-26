@@ -32,6 +32,7 @@ public class PollingBot {
 
         while (true) {
             try {
+                Thread.sleep(1000);
                 String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30"
                         + (offset > 0 ? "&offset=" + offset : "");
                 //System.out.println("PollingBot: " + getUpdatesUrl);
@@ -44,6 +45,7 @@ public class PollingBot {
                 HttpResponse<String> resp = CLIENT.send(req, HttpResponse.BodyHandlers.ofString());
                 String body = resp.body();
                 if (body == null || body.isBlank()) {
+                    System.out.println("Unexpected error continue: " + getUpdatesUrl+" - "+body);
                     // nothing returned
                     continue;
                 }
@@ -74,7 +76,6 @@ public class PollingBot {
                 e.printStackTrace();
                 break;
             }
-            Thread.sleep(1000);
         }
     }
 
