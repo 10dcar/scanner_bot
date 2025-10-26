@@ -30,7 +30,7 @@ public class PollingBot {
 
         System.out.println("Starting polling...");
 
-        while (true) {
+        while (run) {
             try {
                 String getUpdatesUrl = "https://api.telegram.org/bot" + botToken + "/getUpdates?timeout=30"
                         + (offset > 0 ? "&offset=" + offset : "");
@@ -67,11 +67,12 @@ public class PollingBot {
                 // advance offset only if we processed at least one update
                 if (maxSeen >= 0) offset = maxSeen + 1;
 
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ignored) { }
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                break;
             }
             Thread.sleep(1000);
         }

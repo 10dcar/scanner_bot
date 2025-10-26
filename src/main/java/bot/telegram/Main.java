@@ -24,12 +24,15 @@ public class Main {
         // Periodic updates
         Timer timer = new Timer("TimerUpdate");
         TimerTask task = new TimerUpdate(bot, pollingBot);
-        timer.schedule(task, 10_000, 1000 * 60 * 5);
+        timer.schedule(task, 10_000, 1000 * 60 * 60);
 
+        System.out.println("Bot started. Press Ctrl+C to stop.");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Shutdown Hook Running...");
             timer.cancel();
             pollingThread.interrupt();
         }));
+        System.out.println("Main finished.");
+        pollingThread.join();
     }
 }
