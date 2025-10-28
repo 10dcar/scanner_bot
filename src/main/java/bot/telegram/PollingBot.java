@@ -60,7 +60,7 @@ public class PollingBot {
                     System.out.println("Got update_id=" + updateId + " chatId=" + chatId + " text=" + text);
 
                     // Example reply: echo incoming text
-                    String reply = "" + telegramBot.onUpdateReceived(chatId, text);
+                    String reply = "" + telegramBot.onUpdateReceived(chatId, body);
                     boolean sent = sendMessage(botToken, chatId, reply);
 
                     if (updateId > maxSeen) maxSeen = updateId;
@@ -68,7 +68,6 @@ public class PollingBot {
 
                 // advance offset only if we processed at least one update
                 if (maxSeen >= 0) offset = maxSeen + 1;
-
             } catch (IOException e) {
                 e.printStackTrace();
                 Thread.sleep(1000);
